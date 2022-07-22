@@ -1,0 +1,116 @@
+.event-card {
+    display: flex;
+    flex-direction: column;
+    margin: 50px auto;
+    width: 80%;
+    height: 165px;
+    align-items: center;
+    border: 1px solid gray;
+    background-color: #F1A51C;
+    border-radius: 5px;
+    position: relative;
+}
+
+.day-container {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.day-container h2 {
+  z-index: 1;
+  position: absolute;
+}
+
+.day-container img {
+  width: 118px;
+  position: absolute;
+  top: -35px;
+  left: -20px;
+  z-index: 0;
+  filter: drop-shadow(2px 2px 2px gray);
+}
+
+.heading-container {
+  display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.heading-container h1 {
+  margin: 10px;
+}
+
+.heading-container p {
+  margin: 0;
+}
+
+.main-content {
+  width: 50%;
+}
+
+.event-details {
+  
+
+}
+
+.event-details a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.likes {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.likes img {
+  position: absolute;
+    right: 5px;
+    width: 30px;
+    bottom: 0;
+    cursor: pointer;
+}
+
+.likes img:active {
+  transform: scale(1.1);
+}
+
+.likes p {
+  position: absolute;
+  bottom: 7px;
+  right: 0;
+  background-color: #E99EB2;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  text-align: center;
+  box-shadow: 0px 0px 2px #296eb1;
+}
+
+.btn-container {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+}
+
+.edit-btn {
+  cursor: pointer;
+  outline: none;
+  border: none;
+  background-color: #ffffff;
+  padding: 1px 5px;
+  border-radius: 30px;
+  font-size: medium;
+  color: #000000;
+  background-size: 100% 100%;
+  text-decoration: none;
+  box-shadow: 1px 1px 3px grey;
+  transition: .2s;
+}
+
+.edit-btn:active {
+  box-shadow: 0px 0px 1px;
+  transition: .2s;
+}

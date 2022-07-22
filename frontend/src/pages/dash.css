@@ -1,0 +1,8 @@
+.dashboard {
+  background-color: #F2F2F2;
+  height: 80vh;
+  width: 100%;
+  max-width: 800px;
+  color: black;
+  font-size: small;
+}
