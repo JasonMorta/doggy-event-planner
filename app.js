@@ -11,16 +11,17 @@ require('dotenv').config()
 app.use(bodyParser.json())
 
 //require routes to endpoints
-//Owners
-require('./routes/newDog')(app);
-require('./routes/removeDog')(app);
-require('./routes/updateDog')(app);
+//Users
+require('./routes/users/newDog')(app);
+require('./routes/users/removeDog')(app);
+require('./routes/users/updateDog')(app);
 
 //events
-require('./routes/newEvent')(app);
-require('./routes/removeEvent')(app);
-require('./routes/updateEvent')(app);
-
+require('./routes/events/allEvents')(app);
+require('./routes/events/newEvent')(app);
+require('./routes/events/removeEvent')(app);
+require('./routes/events/updateEvent')(app);
+require('./routes/events/OneEvent')(app);
 
 //store API-key in
 const uri = process.env.DB_API_KEY;

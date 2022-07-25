@@ -1,16 +1,22 @@
 .event-card {
-    display: flex;
-    flex-direction: column;
-    margin: 50px auto;
-    width: 80%;
-    height: 165px;
-    align-items: center;
-    border: 1px solid gray;
-    background-color: #F1A51C;
-    border-radius: 5px;
-    position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 200px;
+  align-items: center;
+  background-color: #F3CA4A;
+  position: relative;
+  font-size: initial;
+  transition: linear .3s;
+  transform: translate(0, 0px);
+  margin-bottom: 15px;
 }
 
+.event-card:hover {
+  box-shadow: 0 0 3px gray;
+  transform: translate(20px, 0px);
+  transition: linear .3s;
+}
 .day-container {
   position: absolute;
   left: 0;
@@ -20,6 +26,10 @@
 .day-container h2 {
   z-index: 1;
   position: absolute;
+  font-size: small;
+    width: 80px;
+    top: 12px;
+    text-align: center;
 }
 
 .day-container img {
@@ -93,6 +103,15 @@
   position: absolute;
   right: 5px;
   top: 5px;
+  
+}
+
+.btn-container a {
+  background-color: #296EB1;
+}
+
+.btn-container a:hover {
+  background-color: #135597;
 }
 
 .edit-btn {

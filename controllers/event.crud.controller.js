@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken')
 require('dotenv').config()
 
 //FIND all Events
-exports.findAll = async (req, res)=>{
+exports.all = async (req, res)=>{
 
       try {
             const events = await  model.find({});
@@ -21,12 +21,14 @@ exports.new = async (req, res) => {
       try {
          //define the newOwner. This will also include the other schema tags.
         const newEvent = new model({
-            heading: req.query.heading,
-            shortDes: req.query.shortDes,
-            time: req.query.time,
-            date: req.query.date,
-            location: req.query.location,
-            dogSize: req.query.dogSize,
+            heading: req.body.heading,
+            shortDes: req.body.shortDes,
+            time: req.body.time,
+            day: req.body.day,
+            location: req.body.location,
+            mapLink: req.body.mapLink,
+            dogSize: req.body.dogSize,
+            likes: 0
         });
 
         //save the new user to db
@@ -51,7 +53,7 @@ exports.new = async (req, res) => {
 exports.delete =  async (req, res) => {
 
       try {
-            await model.findOneAndDelete({heading: req.query.heading});
+            await model.findOneAndDelete({heading: req.body.heading});
             const all =  await model.find({});
             res.send(all);
 
@@ -62,29 +64,47 @@ exports.delete =  async (req, res) => {
 }
 
 //UPDATE one event in db
-exports.update =  async (req, res) => {
+exports.updateEvent =  async (req, res) => {
 
-     
-try {
-      //Find owner by id
-      await model.findOneAndUpdate({heading: req.query.heading},
-      {
-            $set: {     heading: req.query.heading,
-                        shortDes: req.query.shortDes,
-                        time: req.query.time,
-                        date: req.query.date,
-                        location: req.query.location,
-                        dogSize: req.query.dogSize } 
-      },
+      try {
+            //Find event by id
+            await model.findOneAndUpdate({
+                        _id: req.body.id
+                  },
+                  {
+                        $set: {     
+                              heading: req.body.heading,
+                              shortDes: req.body.shortDes,
+                              time: req.body.time,
+                              date: req.body.date,
+                              location: req.body.location,
+                              mapLink: req.body.mapLink,
+                              dogSize: req.body.dogSize 
+                        } 
+            },
             { new: true })
-           
-      //return all event documents
-      const events = await model.find({});
-      res.send(events) 
-     
+            
+            //return all event documents
+            const events = await model.find({});
+            res.json(events) 
+      
 
-} catch(err) {
-      console.log(err)
-      res.send(err)
-}              
+      } catch(err) {
+            console.log(err)
+            res.send(err)
+      }              
+}
+
+//Return all events
+
+//Return event by id events
+exports.fetchOne =  async (req, res) => {
+      try{
+            //return all event documents
+            const event = await model.findById({_id: req.body.id});
+            res.json(event) 
+      } catch(err){
+            console.log(err)
+            res.send(err)
+      }
 }

@@ -15,17 +15,19 @@ function App() {
   //create a state for every value that needs to be changed
   //these values can be changed from the parent or any child component
   const [loggedIn, setLoggedIn] = useState(false);
-  const [fetch, setFetch]       = useState(false);
-  const [userData, setUserData] = useState([]);
-  const [allComments, setAllComments] = useState([]);
-  const [events, setEvents] = useState([]);
-
-
+  const [dogOwners, setDogOwners] = useState([]);
+  const [allEvents, setAllEvents] = useState([]);
+  const [comments, setComments] = useState([]);
+  const [editButton, setEditButton] = useState();
+  const [eventId, setEventId] = useState("")
+  //Store selected event id in state
+  const [thisEvent, setThisEvent] = useState({});
+  const [update, setUpdate] = useState(false);
 
 
   return (
     //To pass and sharedState with all components, we use the .Provider element and pass data through value={[stateValues]}
-    <sharedState.Provider value={[loggedIn, setLoggedIn]}>
+    <sharedState.Provider value={[loggedIn, setLoggedIn, dogOwners, setDogOwners, allEvents, setAllEvents, comments, setComments, editButton, setEditButton, eventId, setEventId, thisEvent, setThisEvent,update, setUpdate ]}>
     <div className="App">
       <Shape />
       <Dash />

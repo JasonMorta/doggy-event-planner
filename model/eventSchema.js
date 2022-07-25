@@ -4,8 +4,9 @@ const eventSchema={
   heading:  String, // String is shorthand for {type: String}
   shortDes: String,
   time: String,
-  date: String,
+  day: String,
   location: String,
+  mapLink: String,
   dogSize: [String],
   likes: Number
 };
