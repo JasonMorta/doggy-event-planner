@@ -9,7 +9,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { useState } from 'react';
 
 export default function SignUpModal() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [newUser, setNewUser] = useState('')
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -20,12 +21,48 @@ export default function SignUpModal() {
   };
 
   //Handle user info
-  const [useName, setUserName] = useState('');
+  const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('')
+
+  function handleUserName(e){
+   setUserName(e.target.value)
+  }
+
+  function handlePassword(e){
+   setPassword(e.target.value)
+  }
 
   //Add new dogOwner to db
   async function handleJoin(e){
-
+    await fetch("/newDog", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+       name: userName,
+       password: password,
+      }),
+    })
+     .then((res) => res.json())
+     .then((response) => {
+      setNewUser(response[0].name)
+      console.log(newUser)
+ 
+       setTimeout(() => {
+        console.log(newUser)
+        setOpen(false);
+        
+       }, 2000);
+      })
+     //Handle errors here
+     .catch((error) => {
+       if (error) {
+       
+        
+       }
+     });
+     setNewUser('')
   }
 
   return (
@@ -49,7 +86,8 @@ export default function SignUpModal() {
             type="email"
             fullWidth
             variant="standard"
-            defaultValue={useName}
+            onInput={handleUserName}
+            defaultValue={userName}
           />
                     <TextField
             autoFocus
@@ -59,6 +97,7 @@ export default function SignUpModal() {
             type="email"
             fullWidth
             variant="standard"
+            onInput={handlePassword}
             defaultValue={password}
           />
         </DialogContent>
