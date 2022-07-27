@@ -7,6 +7,8 @@ import Shape from './components/spinner/shadpe-devider/Shape';
 import NavBar from './components/navigation/NavBar';
 import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import About from './pages/About';
+import ErrorPage from './pages/ErrorPage';
+import Gallery from './pages/Gallery';
 
 
 
@@ -18,6 +20,8 @@ function App() {
 
   //create a state for every value that needs to be changed
   //these values can be changed from the parent or any child component
+  const [currentUser, setCurrentUser] = useState('');
+  const [userRoll, setUserRoll] = useState('visitor');
   const [loggedIn, setLoggedIn] = useState(false);
   const [dogOwners, setDogOwners] = useState([]);
   const [allEvents, setAllEvents] = useState([]);
@@ -35,17 +39,19 @@ function App() {
 
   return (
     //To pass and sharedState with all components, we use the .Provider element and pass data through value={[stateValues]}
-    <sharedState.Provider value={[loggedIn, setLoggedIn, dogOwners, setDogOwners, allEvents, setAllEvents, comments, setComments, editButton, setEditButton, eventId, setEventId, thisEvent, setThisEvent,update, setUpdate, thisComment, setThisComment, commentId, setCommentId ]}>
+    <sharedState.Provider value={[loggedIn, setLoggedIn, dogOwners, setDogOwners, allEvents, setAllEvents, comments, setComments, editButton, setEditButton, eventId, setEventId, thisEvent, setThisEvent,update, setUpdate, thisComment, setThisComment, commentId, setCommentId, currentUser, setCurrentUser,userRoll, setUserRoll ]}>
     <div className="App">
-      <Shape />
-      <NavBar />
+      
+    
 
 
       <Router>
-
+      <NavBar />
         <Routes>
           <Route path="/" element={<Dash />} />
           <Route path="/About" element={<About />} />
+          <Route path="/Gallery" element={<Gallery />} />
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
      
       </Router>

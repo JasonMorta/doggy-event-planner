@@ -1,0 +1,10 @@
+@font-face {
+ font-family: mini-story;
+ font-style: normal;
+ font-weight: normal;
+ src: url("../../../static/fonts/MiniStory.ttf")
+}
+
+.event-card h1 {
+ font-family: mini-story !important ;
+}

@@ -12,28 +12,75 @@ require('dotenv').config()
       //}
 
 
-//ADD a dogOwner document to db
+
+      //FIND all owners
+exports.findAll = async (req, res)=>{
+
+      try {
+            const owners = await  model.find({});
+            res.send(owners)  
+      } catch {
+            console.log(err)
+            res.send(err)
+      }
+}
+
+      //FIND One/LOG-IN owner
+      exports.logIn = async (req, res, next)=>{
+
+            try {
+                  const user = await  model.findOne({
+                        name: req.body.name,
+                        password: req.body.password
+                  }
+                  );
+                  res.json(user)   
+                  console.log(user)
+            } catch(err) {
+                  console.log(err)
+                  res.send(err)
+                  next()
+            }
+      }
+
+//ADD(SIGN-UP) a dogOwner document to db
 exports.new = async (req, res) => {
+
+      //First check is userName exists
+      let name = req.body.name
+      let password = req.body.password
 
       //handle runtime errors
       try {
-             //define the newOwner. This will also include the other schema tags.
-            const newOwner = new model({
-                  name: req.query.name,
-                  password: req.query.password,
-            });
+                  
 
-            //save the new user to db
-            await newOwner.save();
+                  const user = await model.findOne({
+                        name: name
+                  })
+            if (user) {
+                  let exists = "Username taken"
+                  console.log("User exists")
+                  res.json(exists)
+            } else {
+                  //define the newOwner. This will also include the other schema tags.
+                  const newOwner = new model({
+                        name: name,
+                        password: password ,
+                        roll: 'member'
+                  });
 
-            //return all document
-            const all = await model.find({ name: req.query.name,});
-            res.json(all)
+                  //save the new user to db
+                  await newOwner.save();
 
-            //res.send(dogOwner); //send the same data back 
-            console.log("New user Added");
+                  //find return this document
+                  const user = await model.findOne({name: name});
+                  res.send(user)
 
-      } catch (err) {
+                  //res.send(dogOwner); //send the same data back 
+                  console.log("New user Added");
+            }
+
+      } catch(err) {
             console.log(err)
             res.send(err)
       }  
@@ -42,26 +89,20 @@ exports.new = async (req, res) => {
 //DELETE a dogOwner from db
 exports.delete =  async (req, res) => {
 
-      try{
-            //finds the first document that matches the query
-            await model.findOneAndDelete({name: req.query.name}, async (err, data)=>{
-                  if (data == null) {
-                  
-                        console.log("no data found")
-                  
-                  } else {
-                        console.lof("Deleted")
-                        const all = await model.find({});
-                        res.send(all)
-                  }
-            });
-                  
-            
+      try {
+            await model.findOneAndDelete(
+            { _id: req.body.id }
+            )
+
+            //find & return all owners documents
+            const owners =  await model.find({});
+            res.send(owners);
+            console.log("user deleted")
 
       } catch(err) {
             console.log(err)
             res.send(err)
-      }              
+      }             
 }
 
 
@@ -69,7 +110,7 @@ exports.delete =  async (req, res) => {
 //UPDATE Owner
 exports.update =  async (req, res) => {
 
-            let dog = req.query.name
+            let dog = req.body.name
       try{
             //Find owner by id
             await model.findOneAndUpdate({name: dog},
@@ -79,7 +120,7 @@ exports.update =  async (req, res) => {
                   { new: true })
                  
             //return owner documents
-            const dogOwner = await model.find(req.query.dog);
+            const dogOwner = await model.find(req.body.dog);
             res.send(dogOwner) 
            
 

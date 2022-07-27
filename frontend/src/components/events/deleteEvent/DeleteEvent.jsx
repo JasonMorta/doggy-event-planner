@@ -1,7 +1,8 @@
 import { Button } from '@mui/material'
 import React from 'react'
 import { useContext } from 'react'
-import { sharedState } from '../../App'
+import { sharedState } from '../../../App'
+
 
 export default function DeleteEvent(props) {
 

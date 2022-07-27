@@ -8,58 +8,114 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import './drawerButton.css'
+import { useEffect, useContext, useState } from 'react';
+import { sharedState } from '../../App';
+import trash from '../../static/images/trash.png'
+import CircularStatic from '../spinner/CircularLoader';
+
 
 export default function AllUsersDrawer() {
-  const [state, setState] = React.useState({
+
+  let appState = useContext(sharedState)
+
+  let [loggedIn, setLoggedIn, dogOwners, setDogOwners, allEvents, setAllEvents, comments, setComments, editButton, setEditButton, eventId, setEventId, thisEvent, setThisEvent,update, setUpdate, thisComment, setThisComment, commentId, setCommentId, currentUser, setCurrentUser ] = appState
+
+  //Drawer satet
+  const [state, setState] = useState({
     right: false,
   });
 
+  const [closeDrawer, setCloseDrawer]= useState(false)
+  const [deleted, setDeleted] = useState(false)
+
+  //controls the drawer functionality
   const toggleDrawer = (anchor, open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
-
+    setCloseDrawer(true)
     setState({ ...state, [anchor]: open });
   };
+
+  //Return app users from db
+  useEffect(() => {
+    //console.log(thisEvent)
+    async function getEvents() {
+      await fetch("/findAll", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((response) => {
+          setDogOwners(response);
+          
+        })
+        .catch((error) => {
+          console.log("error");
+          console.log(error);
+        });
+    }
+    getEvents();
+  }, []);
+
+
+  //delete user
+  async function deleteUser(e){
+    setDeleted(true)
+    await fetch("/removeDog", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        id: e.target.dataset.user,
+      }),
+      //handle errors
+    })
+      .then((res) => res.json())
+      .then((response) => {
+        setDogOwners(response)
+       setTimeout(() => {
+        setDeleted(false)
+       }, 250);
+      })
+      .catch((error) =>{
+         console.log(error)
+         alert(error)
+        });
+  }
+
+
 
   const list = (anchor) => (
     <Box
       sx={{ width: 250 }}
       role="presentation"
-      onClick={toggleDrawer(anchor, false)}
+      onClick={toggleDrawer(anchor, closeDrawer)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
+        {dogOwners.map((user, index) => (
+          <ListItem key={user._id} disablePadding>
+            <ListItemButton >
               <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                <AccountCircleIcon color='secondary' />
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText className='userTab' primary={user.name} secondary={<img src={trash} 
+                className="trash"
+                data-user={user._id} 
+                onClick={deleteUser}
+                alt='trash-can' /> 
+              } />
             </ListItemButton>
           </ListItem>
         ))}
-      </List>
 
-
-
-      <Divider />
-      
-      <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
       </List>
     </Box>
   );

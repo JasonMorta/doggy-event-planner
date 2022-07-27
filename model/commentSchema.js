@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const Schema = {
-  
+  user: String,
   comment: String,
   created   : { 
     type:  Date,

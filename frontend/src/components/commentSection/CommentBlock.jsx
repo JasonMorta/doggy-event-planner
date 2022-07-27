@@ -23,11 +23,10 @@ export default function CommentBlock() {
   let state = useContext(sharedState);
 
 
-  let [loggedIn, setLoggedIn, dogOwners, setDogOwners, allEvents, setAllEvents, comments, setComments, editButton, setEditButton, eventId, setEventId, thisEvent, setThisEvent,update, setUpdate, thisComment, setThisComment ] = state
+  let [loggedIn, setLoggedIn, dogOwners, setDogOwners, allEvents, setAllEvents, comments, setComments, editButton, setEditButton, eventId, setEventId, thisEvent, setThisEvent,update, setUpdate, thisComment, setThisComment, commentId, setCommentId, currentUser, setCurrentUser,userRoll, setUserRoll ] = state
 
-
+  const [open, setOpen] = React.useState(false);
   const [deleted, setDeleted] = React.useState(false)
-
 
   //return all comment from db
   useEffect(() => {
@@ -40,15 +39,13 @@ export default function CommentBlock() {
         })
           .then((res) => res.json())
           .then((response) => {
-            console.log(response);
             setComments(response);
           })
           .catch((error) => {
-            console.log("error");
             console.log(error);
+            alert(error);
           });
       }
-      console.log(comments)
       getComments();
 
   }, [setComments])
@@ -56,8 +53,12 @@ export default function CommentBlock() {
 
   //DELETE Comment
 
+
+
   async function deleteComment(e){
     setDeleted(false)
+
+    console.log(e)
 
     await fetch("/removeComment", {
       method: "DELETE",
@@ -72,7 +73,6 @@ export default function CommentBlock() {
       .then((res) => res.json())
       .then((response) => {
        setComments(response)
-       console.log(response)
       })
       .catch((error) =>{
        console.log(error)
@@ -81,57 +81,80 @@ export default function CommentBlock() {
       setDeleted(true)
   }
 
-  const [open, setOpen] = React.useState(false);
-  function editComment(e){
-    console.log(e)
-    setOpen(true);
-  }
+ 
+
 
   return (
-    <div className='commentBlock'>
+    <div className="commentBlock">
       <h3>Comments</h3>
-      <NewCommentModal />
-          <List sx={{ width: '100%', maxWidth: '90%', bgcolor: 'background.paper' }} className="commentsList">
+      {userRoll === "member" ? (
+        <NewCommentModal />
+      ) : userRoll === "admin" ? (
+        <NewCommentModal />
+      ) : (
+        <></>
+      )}
+      <List
+        sx={{ width: "100%", maxWidth: "90%", bgcolor: "background.paper" }}
+        className="commentsList"
+      >
+        {comments.map((user) => (
+          <>
+            <ListItem alignItems="flex-start" key={user._id}>
+              <ListItemText
+                primary=""
+                secondary={
+                  <React.Fragment>
+                    <Typography
+                      sx={{ display: "inline" }}
+                      component="span"
+                      variant="body2"
+                      color="text.primary"
+                    >
+                      {`${user.user}`}
+                    </Typography>
+                    {` — ${user.comment}`}
+                  </React.Fragment>
+                }
+              />
 
-
-       
-             
-                { comments.map( user => 
-              
-                <>
-                  <ListItem alignItems="flex-start" >
-    
-                      <ListItemText 
-                        primary="Topic"
-                        secondary={<React.Fragment>
-                          <Typography
-                            sx={{ display: 'inline' }}
-                            component="span"
-                            variant="body2"
-                            color="text.primary"
-                          >{'user.user'}
-                          </Typography>
-                          {` — ${user.comment}`}
-                        </React.Fragment>} />
-                        <div className='comment-icons'>
-                          <EditComment id={user._id} />
-                          <img src={trash} 
-                          onClick={deleteComment} 
-                          alt="delete-icon"
-                          data-del={user._id}/>
-                          
-                        </div>
-                    </ListItem>
-
-                    <Divider variant="inset" component="li" />
-                </>
-                
+              {/*
+               *** members can only  delete their own comment
+               *** Admin can delete any comment
+               */}
+              {userRoll === "admin" ? (
+                <div className="comment-icons">
+                  <img
+                    src={trash}
+                    onClick={deleteComment}
+                    alt="delete-icon"
+                    data-del={user._id}
+                    data-name={user.user}
+                  />
+                </div>
+              ) : currentUser.name === user.user ? (
+                userRoll === "member" ? (
+                  <div className="comment-icons">
+                    <img
+                      src={trash}
+                      onClick={deleteComment}
+                      alt="delete-icon"
+                      data-del={user._id}
+                      data-name={user.user}
+                    />
+                  </div>
+                ) : (
+                  <></>
+                )
+              ) : (
+                <></>
               )}
-             
-        
+            </ListItem>
 
-          
-          </List>
+            <Divider variant="inset" component="li" />
+          </>
+        ))}
+      </List>
     </div>
   );
 }

@@ -12,9 +12,11 @@ import { Box } from '@mui/system';
 import { useState } from 'react';
 import { useContext } from 'react';
 import { sharedState } from '../../../App';
-import Update from '../../updateEvent/Update';
-import DeleteEvent from '../../deleteEvent/DeleteEvent';
+
+
 import TextLoader from '../../spinner/TextLoader';
+import Update from '../updateEvent/Update';
+import DeleteEvent from '../deleteEvent/DeleteEvent';
 
 
 //Handle the Modal functionality
@@ -210,9 +212,9 @@ function editDay(e){
         </DialogContent>}
 
         <DialogActions>
-          
+        
           <DeleteEvent close={handleClickClose} />
-
+          
           <Update close={handleClickClose}/>
 
           <Button variant="contained" onClick={handleClickClose}>

@@ -15,6 +15,11 @@
 
 }
 
+.commentBlock li {
+    align-items: center;
+}
+
+
 .comment-icons {
     display: flex;
     flex-direction: column;

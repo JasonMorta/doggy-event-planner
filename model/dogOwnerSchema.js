@@ -3,18 +3,18 @@ const mongoose = require('mongoose');
 const Schema = {
   name: {
     type: String,
-    required: true,
+    required: true
   },
   password: {
     type: String,
-    required: true,
+    required: true
   },
   comments: [{ type: String, date: Date }],
   created: {
     type: Date,
     default: Date.now
   },
-  roll: {type: String, required: false,}
+  roll: {type: String}
 }
 
 module.exports = MongooseModel = mongoose.model("dogOwners", Schema)

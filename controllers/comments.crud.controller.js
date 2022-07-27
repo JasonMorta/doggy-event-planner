@@ -34,7 +34,7 @@ exports.addComment = async (req, res) => {
  try {
         //define the newOwner. This will also include the other schema tags.
        const newComment = new model({
-             // user: req.body.user,
+             user: req.body.user,
              comment: req.body.comment,
              
        });

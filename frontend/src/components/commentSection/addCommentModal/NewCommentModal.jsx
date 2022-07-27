@@ -30,7 +30,7 @@ export default function NewCommentModal() {
  //shared state
  let state = useContext(sharedState)
  //deconstruct state
- let [loggedIn, setLoggedIn, dogOwners, setDogOwners, allEvents, setAllEvents, comments, setComments, editButton, setEditButton, eventId, setEventId, thisEvent, setThisEvent,update, setUpdate, thisComment, setThisComment ] = state
+ let [loggedIn, setLoggedIn, dogOwners, setDogOwners, allEvents, setAllEvents, comments, setComments, editButton, setEditButton, eventId, setEventId, thisEvent, setThisEvent,update, setUpdate, thisComment, setThisComment, commentId, setCommentId, currentUser, setCurrentUser,userRoll, setUserRoll ] = state
 
  
  //Handle the Modal button functionality
@@ -67,14 +67,13 @@ export default function NewCommentModal() {
   //Add new Comment with API request
  async function addComment(e) {
 
-  console.log(thisComment)
      setOpen(false);
      //Add new user to db
      await fetch("/addComment", {
        method: "POST",
        headers: { "Content-Type": "application/json" },
        body: JSON.stringify({
-        // user: req.body.user,
+        user: currentUser.name,
         comment: thisComment,
        }),
        //handle errors
@@ -88,7 +87,7 @@ export default function NewCommentModal() {
          console.log(error);
        });
        setLoading(false)
-      
+       setThisComment('')
  }//end of request function
 
 

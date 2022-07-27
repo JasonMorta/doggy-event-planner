@@ -1,6 +1,6 @@
 import { Button } from '@mui/material'
 import React, { useContext } from 'react'
-import { sharedState } from '../../App'
+import { sharedState } from '../../../App'
 
 export default function Update(props) {
 

@@ -12,9 +12,11 @@ app.use(bodyParser.json())
 
 //require routes to endpoints
 //Users
+require('./routes/users/findAll')(app);
 require('./routes/users/newDog')(app);
 require('./routes/users/removeDog')(app);
 require('./routes/users/updateDog')(app);
+require('./routes/users/logInUser')(app);
 
 //events
 require('./routes/events/allEvents')(app);

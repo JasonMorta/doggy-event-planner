@@ -1,0 +1,12 @@
+.logIn-btn {
+ display: flex;
+ flex-direction: row;
+ width: 155px;
+ justify-content: space-between;
+ align-items: center;
+ margin: 20px;
+}
+
+.signUp-container p {
+ color: black;
+}

@@ -1,3 +1,32 @@
 .all-users-btn {
  margin: 4px;
 }
+
+.userTab {
+ display: flex;
+ justify-content: space-between;
+ position: relative;
+}
+
+.trash {
+ width: 20px;
+ transition: ease-in-out .2s;
+ position: absolute;
+ right: 10px;
+ top: 50%;
+ transform: translate(0px, -50%);
+}
+
+.trash:hover {
+ width: 25px;
+ transition: ease-in-out .2s;
+
+}
+
+.trash:active {
+ width: 20px;
+ transition: ease-in-out .1s;
+}
+
+
+

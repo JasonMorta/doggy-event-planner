@@ -6,35 +6,75 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import './signIn.css'
+import CircularStatic from '../spinner/CircularLoader';
+import TextLoader from '../spinner/TextLoader';
+import { sharedState } from '../../App';
 
+
+//This component will handle both the logIn and sign-up
 export default function SignUpModal() {
-  const [open, setOpen] = useState(false);
-  const [newUser, setNewUser] = useState('')
 
+ let shareState = useContext(sharedState)
+
+ let [loggedIn, setLoggedIn, dogOwners, setDogOwners, allEvents, setAllEvents, comments, setComments, editButton, setEditButton, eventId, setEventId, thisEvent, setThisEvent,update, setUpdate, thisComment, setThisComment, commentId, setCommentId, currentUser, setCurrentUser,userRoll, setUserRoll ] = shareState;
+
+ //handle state functions
+  const [open, setOpen] = useState(false);
+  const [newUser, setNewUser] = useState('');
+  const [join, setJoin] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [clearField, setClearField] = useState(false);
+  const [logIn, setLogIn] = useState(false);
+
+  // clear fields before opening
   const handleClickOpen = () => {
+    setUserName('')
+    setPassword('')
+    setLogIn(false)
     setOpen(true);
+    setClearField(true);
+    setTimeout(() => {
+      setClearField(false)
+    }, 300);
+
   };
 
+
   const handleClose = () => {
-    setOpen(false);
+    setOpen(false);//close modal
+    setClearField(false);//clear input fields
+    setLogIn(false)
   };
 
   //Handle user info
+  //Used for logIn and sign-up requests
   const [userName, setUserName] = useState('');
-  const [password, setPassword] = useState('')
+  const [password, setPassword] = useState('');
 
   function handleUserName(e){
    setUserName(e.target.value)
+   console.log(userName)
   }
 
   function handlePassword(e){
    setPassword(e.target.value)
+   console.log(password)
   }
 
-  //Add new dogOwner to db
-  async function handleJoin(e){
-    await fetch("/newDog", {
+  //use must enter a name and password
+
+
+
+
+  //Log-in user
+  async function handleLogIn(){
+   setLoading(true)
+   setTimeout(() => {
+    setClearField(false)
+   }, 500);
+    await fetch("/logIn", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -46,64 +86,170 @@ export default function SignUpModal() {
     })
      .then((res) => res.json())
      .then((response) => {
-      setNewUser(response[0].name)
-      console.log(newUser)
- 
-       setTimeout(() => {
-        console.log(newUser)
-        setOpen(false);
+      if(response===null){
+       alert("User not found");
+       setOpen(false);
+       setLoading(false);
+      } else {
+       setCurrentUser(response)//set user access
+       setUserRoll(response.roll)
+         setTimeout(() => {
+          setOpen(false);
+          setJoin(true);
+          setLoading(false);
+          setLogIn(false)
+         }, 500);
+        }
         
-       }, 2000);
-      })
+     })
      //Handle errors here
      .catch((error) => {
-       if (error) {
+       console.log(error)
        
-        
-       }
      });
-     setNewUser('')
+    
+  }// end of function
+
+
+
+  //Add new User to db & Log in
+  async function handleJoin(e){
+   if (logIn){
+    //log in user
+    handleLogIn()
+   } else {
+    //Create new user
+    setTimeout(() => {
+     setClearField(false)
+    }, 500);
+     await fetch("/newDog", {
+       method: "POST",
+       headers: {
+         "Content-Type": "application/json",
+       },
+       body: JSON.stringify({
+        name: userName,
+        password: password,
+       }),
+     })
+      .then((res) => res.json())
+      .then((response) => {
+       console.log(response)
+       if (response === "Username taken"){
+
+          alert('Name taken')
+
+       } else {
+        console.log(response)
+        setCurrentUser(response)//set user access
+        setUserRoll(response.roll)
+        setTimeout(() => {
+          setOpen(false);
+          setJoin(true);
+          setLoading(false);
+          setLogIn(false)
+          console.log(currentUser)
+        }, 500);
+
+       }
+  
+       })
+      //Handle errors here
+      .catch((error) => {
+        console.log(error)
+      });
+
+   }
+    
+  }// end of function
+
+
+
+
+
+  /* 
+  ===========================================================
+  * Handle the log-in and log-out
+  * This button also opens the login modal if not logged in.
+  * If logged In, this button will function as a log-out button.
+  * When a member loges in, then can add comment and only delete
+  * delete their own comment.
+  * 
+  ===========================================================
+  */
+  function logInButton(e){
+    if(logIn){
+      setLogIn(false)
+      setUserName('')
+      setPassword('')
+      setCurrentUser('')
+      setUserRoll('')
+      
+    }else{
+    setLogIn(true)
+    setUserName('')
+    setPassword('')
+    setOpen(true);
+    setClearField(true);
+    setTimeout(() => {
+      setClearField(false)
+    }, 300);
+  }
   }
 
   return (
-    <div>
-      <Button variant="contained" color='success' onClick={handleClickOpen}>
-        SignUp
-      </Button>
+    <div className='signUp-container'>{join ? <p>Welcome {newUser}</p>: ""}
+     <div className='logIn-btn'>
+       <Button variant="contained" color='success' onClick={handleClickOpen}>
+         Join
+       </Button>
+       <Button variant="contained" color='success' onClick={logInButton}>
+         {logIn ? 'Log out' : 'Log in'}
+       </Button>
+     </div>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Join</DialogTitle>
+        <DialogTitle>{logIn ? 'Log in' : 'Join'}</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Join our community today and find more friend for your
             dog. <br/>
             ▸ As a new member you can also share your thoughts in the comment section.
-          </DialogContentText>
-          <TextField
+      
+         </DialogContentText>
+         { clearField ? <TextLoader />
+           :
+           <TextField
             autoFocus
             margin="dense"
             id="name"
             label="Dog name"
-            type="email"
+            type="user name"
+            required
             fullWidth
             variant="standard"
             onInput={handleUserName}
-            defaultValue={userName}
-          />
-                    <TextField
-            autoFocus
+            defaultValue={userName}/>
+          }
+          { clearField ? <TextLoader />
+           :
+          <TextField
+            
             margin="dense"
             id="password"
             label="password"
             type="email"
             fullWidth
+            required
             variant="standard"
             onInput={handlePassword}
-            defaultValue={password}
-          />
+            defaultValue={password} />
+           }
         </DialogContent>
+       
         <DialogActions>
           <Button onClick={handleClose}>not now</Button>
-          <Button onClick={handleJoin}>join</Button>
+          {loading ? <CircularStatic />
+          :<Button onClick={handleJoin}>{logIn ? 'Log in' : 'Join'}</Button>}
         </DialogActions>
       </Dialog>
     </div>
