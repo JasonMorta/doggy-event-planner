@@ -1,24 +1,19 @@
 import React, { useContext, useEffect } from 'react'
 import './event.css'
-import cloud from '../static/images/cloud.png'
-import notLiked from '../static/images/like-notFilled.png'
-import isLiked from '../static/images/like-filled.png'
-import { DateTime } from "luxon";
+import cloud from '../../../static/images/cloud.png'
+import { sharedState } from '../../../App'
 
-import { useState } from 'react'
-import { sharedState } from '../App'
-import { Button } from '@mui/material'
-import EditEventModal from './EditEventModal'
+import EditEventModal from '../editEvent/EditEventModal'
+import FavIcon from '../favIcon/FavIcon'
 
 export default function Events() {
 
   //shared state
   let state = useContext(sharedState)
   //deconstruct state
-  let [loggedIn, setLoggedIn, dogOwners, setDogOwners, allEvents, setAllEvents, comments, setComments, editButton, setEditButton, eventId, setEventId,thisEvent, setThisEvent] = state
+  let [loggedIn, setLoggedIn, dogOwners, setDogOwners, allEvents, setAllEvents, comments, setComments, editButton, setEditButton, eventId, setEventId, thisEvent, setThisEvent,update, setUpdate ] = state
 
-  const [like, setLike] = useState(false)
-  const [likeCount, setLikeCount]=useState(0)
+
 
 
   //Get all task from API on page load
@@ -45,19 +40,9 @@ export default function Events() {
   }, []);
 
 
-  function likeButton(){
-    if(like){
-      setLikeCount(prev => prev -1)
-      setLike(false)
-    } else {
-      setLikeCount(prev => prev +1)
-      setLike(true)
-    }
-  }
+ 
 
-  function editEvent(e){
-    alert("working")
-  }
+
 
 
   return (
@@ -68,7 +53,7 @@ export default function Events() {
           <div className='event-card' key={event._id}>
             
             <div className='day-container'>
-              <h2>{event.day }</h2>
+              <h2>{event.date }</h2>
               <img src={cloud} alt="day_image"/>
             </div>
           <div className='main-content'>
@@ -83,18 +68,9 @@ export default function Events() {
                 <p>Dog size: {event.dogSize[0]}</p>
               </div>
           </div>
-          
-            <div className='likes'>
-              <img src={!like ? notLiked : isLiked} alt="likes" onClick={()=>{
-                if(like){
-                setLikeCount(prev => prev -1)
-                setLike(false)
-              } else {
-                setLikeCount(prev => prev +1)
-                setLike(true)
-              }}}/>
-              <p>{likeCount}</p>
-            </div>
+            <FavIcon
+              id={event._id}
+              fav={event.likes} />
               <EditEventModal event={event._id} />
               
           </div>)

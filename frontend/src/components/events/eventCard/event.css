@@ -14,9 +14,10 @@
 
 .event-card:hover {
   box-shadow: 0 0 3px gray;
-  transform: translate(20px, 0px);
+  transform: translate(0px, 0px);
   transition: linear .3s;
 }
+
 .day-container {
   position: absolute;
   left: 0;
@@ -53,10 +54,16 @@
 
 .heading-container p {
   margin: 0;
+ 
 }
 
 .main-content {
   width: 50%;
+  min-width: 185px;
+}
+
+.main-content p {
+  font-size: small;
 }
 
 .event-details {

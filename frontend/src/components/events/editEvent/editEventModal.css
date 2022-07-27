@@ -4,3 +4,7 @@
  top: 5px;
 }
 
+.newEvent .MuiPaper-root {
+ align-items: center;
+}
+

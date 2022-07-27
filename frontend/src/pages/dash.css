@@ -1,9 +1,26 @@
 .dashboard {
   background-color: #F2F2F2;
-  height: 80vh;
+
   width: 100%;
   max-width: 800px;
   color: black;
   font-size: small;
   position: relative;
+}
+
+.dashboard-container {
+  max-width: 800px;
+  margin: 0 20px;
+  width: 50vw;
+  min-width: 320px;
+}
+
+.admin-controllers {
+  position: sticky;
+  top: 0px;
+  left: 0;
+  z-index: 1;
+  max-width: 800px;
+  display: flex;
+  justify-content: flex-end;
 }

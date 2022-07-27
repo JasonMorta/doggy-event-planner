@@ -3,7 +3,6 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import AddLinkIcon from '@mui/icons-material/AddLink';
@@ -12,13 +11,17 @@ import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/mater
 import { Box } from '@mui/system';
 import { useState } from 'react';
 import { useContext } from 'react';
-import { sharedState } from '../App';
+import { sharedState } from '../../../App';
+import TextLoader from '../../spinner/TextLoader';
+
 
 
 //Handle the Modal functionality
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
+
+//Whenever the edit button is clicked, the current event's data is stored in the "thisEvent" state.
 
 export default function AddEventModal() {
 
@@ -27,16 +30,22 @@ export default function AddEventModal() {
  //deconstruct state
  let [loggedIn, setLoggedIn, dogOwners, setDogOwners, allEvents, setAllEvents, comments, setComments, editButton, setEditButton, eventId, setEventId,thisEvent, setThisEvent, update, setUpdate] = state
 
-
+ 
  //Handle the Modal button functionality
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
+    setLoading(true)
+    setTimeout(() => {
+      setLoading(false)
+    }, 200);
   };
 
   const handleClickClose = () => {
    setOpen(false);
+   setThisEvent('')
  };
 
   /* 
@@ -45,7 +54,9 @@ export default function AddEventModal() {
   ========================================
   */
  //All these state values will be passed to server to add a new event
-//The ThisEvent state value can also be accessed by other components through useContext hook
+
+  // To update a state object we make use of the spread operator.
+  //
   function handleEventHeading(e){
     setThisEvent({...thisEvent, heading: e.target.value})
   }
@@ -66,12 +77,13 @@ export default function AddEventModal() {
     console.log(e)
   };
   function handleDay(e){
-    setThisEvent({...thisEvent, day:e.target.value})
+    setThisEvent({...thisEvent, date:e.target.value})
+    console.log(e)
   };
 
   //Add new event with API request
  async function addEvent(e) {
-  console.log(thisEvent)
+  
      setOpen(false);
      //Add new user to db
      await fetch("/newEvent", {
@@ -81,7 +93,7 @@ export default function AddEventModal() {
         heading: thisEvent.heading,
         shortDes: thisEvent.description,
         time: thisEvent.time,
-        day: thisEvent.day,
+        date: thisEvent.date,
         location: thisEvent.location,
         mapLink: thisEvent.link,
         dogSize: thisEvent.size,
@@ -91,7 +103,8 @@ export default function AddEventModal() {
        .then((res) => res.json())
        .then(( response) => {
         setAllEvents(response)
-        
+        setThisEvent('')
+ 
        })
         .catch((error) => {
          console.log(error);
@@ -99,7 +112,8 @@ export default function AddEventModal() {
   
  
  }//end of request function
-  
+
+
 
   return (
     <div className='addEvent'>
@@ -114,7 +128,10 @@ export default function AddEventModal() {
         aria-describedby="alert-dialog-slide-description"
       >
         <DialogTitle>{"Add a new event"}</DialogTitle>
-        <DialogContent className='newEvent'>
+        
+       {loading ? <TextLoader /> 
+       :
+       <DialogContent className='newEvent'>
         <TextField
           id="filled-textarea"
           label="Event name"
@@ -149,7 +166,7 @@ export default function AddEventModal() {
           multiline
           variant="filled"
           onInput={handleDay}
-          defaultValue={thisEvent.day}
+          defaultValue={thisEvent.date}
          />
          <TextField
           id="filled-textarea"
@@ -169,22 +186,23 @@ export default function AddEventModal() {
              defaultValue={thisEvent.link}
               />
          </Box>
-         {console.log(thisEvent.size)}
+        
         <FormControl variant="filled" sx={{ m: 1, minWidth: 120, margin: 0 }}>
           <InputLabel id="demo-simple-select-filled-label">Dog size</InputLabel>
           <Select
             labelId="demo-simple-select-filled-label"
-            value={thisEvent.size===undefined ? " " :  thisEvent.size }
-            name="Dog size"
+            value={thisEvent.size===undefined ? '':thisEvent.size }
             onChange={handleDogSize}>
             <MenuItem type='text' value={"Mini"}>Mini</MenuItem>
-            {/* <MenuItem type='text' value={"Small"}>Small</MenuItem>
+            <MenuItem type='text' value={"Small"}>Small</MenuItem>
             <MenuItem type='text' value={"Medium"}>Medium</MenuItem>
             <MenuItem type='text' value={"Large"}>Large</MenuItem>
-            <MenuItem type='text' value={"All sizes"}>All sizes</MenuItem> */}
+            <MenuItem type='text' value={"All sizes"}>All sizes</MenuItem>
           </Select>
        </FormControl>
-        </DialogContent>
+         </DialogContent>
+       }
+      
         <DialogActions>
           <Button variant="contained" onClick={addEvent}>Add</Button>
           

@@ -3,7 +3,6 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import AddLinkIcon from '@mui/icons-material/AddLink';
@@ -12,8 +11,10 @@ import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/mater
 import { Box } from '@mui/system';
 import { useState } from 'react';
 import { useContext } from 'react';
-import { sharedState } from '../App';
-import Update from './updateEvent/Update';
+import { sharedState } from '../../../App';
+import Update from '../../updateEvent/Update';
+import DeleteEvent from '../../deleteEvent/DeleteEvent';
+import TextLoader from '../../spinner/TextLoader';
 
 
 //Handle the Modal functionality
@@ -29,16 +30,23 @@ export default function AddEventModal(props) {
  let [loggedIn, setLoggedIn, dogOwners, setDogOwners, allEvents, setAllEvents, comments, setComments, editButton, setEditButton, eventId, setEventId, thisEvent, setThisEvent, update, setUpdate ] = state
 
 
+ //When the edit button is clicked, the current event's id is stored
+ //in eventId state. This will allow the delete and update buttons
+ //to perform fetch request with that id
+
 
 
  //Handle the Modal button functionality
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false)
 
   //Edit button functionality
+  //Fill the fields with this current event values.
   async function handleClickOpen(e){
-    setOpen(true);
-    setEventId(e.target.dataset.listitem)
-    await fetch('oneEvent',{
+    setLoading(true)
+
+    await fetch('OneEvent',{
+     
      method: "POST",
      headers: { "Content-Type": "application/json" },
      body: JSON.stringify({
@@ -47,19 +55,22 @@ export default function AddEventModal(props) {
     })
       .then(response => response.json())
       .then((data) => {
-        console.log(data)
         setThisEvent(data)
+        setOpen(true);
+        setTimeout(() => {
+          setLoading(false)
+        }, 500);
+    })
      
       
-      })
-    
-   
   };
+
 
   const handleClickClose = (e) => {
    setOpen(false);
    setUpdate(false)
-    console.log(thisEvent)
+   setThisEvent('')
+   console.log(thisEvent)
  };
 
 
@@ -74,26 +85,28 @@ export default function AddEventModal(props) {
 
  //All these state values will be passed to server to add a new event
 //The ThisEvent state value can also be accessed by other components through useContext hook
-function handleEventHeading(e){
+function editEventHeading(e){
  setThisEvent({...thisEvent, heading: e.target.value})
 }
-function handleDescription(e){
+function editDescription(e){
  setThisEvent({...thisEvent, description:e.target.value})
 }
-function handleEventTime(e){
+function editEventTime(e){
  setThisEvent({...thisEvent, time:e.target.value})
+
 }
-function handleEventLocation(e){
+function editEventLocation(e){
  setThisEvent({...thisEvent, location:e.target.value})
 }
-function handleLocationLink(e){
+function editLocationLink(e){
  setThisEvent({...thisEvent, link:e.target.value})
 }
-function handleDogSize(e){
+function editDogSize(e){
  setThisEvent({...thisEvent, size:e.target.value})
 };
-function handleDay(e){
- setThisEvent({...thisEvent, day:e.target.value})
+function editDay(e){
+ setThisEvent({...thisEvent, date:e.target.value})
+ 
 };
 
 
@@ -117,14 +130,18 @@ function handleDay(e){
         aria-describedby="alert-dialog-slide-description"
       >
         <DialogTitle>{"Edit Event"}</DialogTitle>
-        <DialogContent className='newEvent'>
+        {loading ?
+        <TextLoader /> :
+          
+          
+          <DialogContent className='newEvent'>
         <TextField
           id="filled-textarea"
           label="Event name"
           placeholder="Dog meeting"
-          multiline
           variant="filled"
-          onInput={handleEventHeading}
+          color="success"
+          onInput={editEventHeading}
           defaultValue={thisEvent.heading}
          />
          <TextField
@@ -133,34 +150,35 @@ function handleDay(e){
           multiline
           rows={4}
           variant="filled"
-          onInput={handleDescription}
+          color="success"
+          onInput={editDescription}
           defaultValue={thisEvent.shortDes}
          />
          <TextField
           id="filled-textarea"
           label="Time"
           placeholder="10:30pm"
-          multiline
           variant="filled"
-          onInput={handleEventTime}
+          color="success"
+          onInput={editEventTime}
           defaultValue={thisEvent.time}
          />
         <TextField
           id="filled-textarea"
           label="Date"
           placeholder="2 Jul 2022"
-          multiline
           variant="filled"
-          onInput={handleDay}
-          defaultValue={thisEvent.day}
+          color="success"
+          onInput={editDay}
+          defaultValue={thisEvent.date}
          />
          <TextField
           id="filled-textarea"
           label="Location"
           placeholder="Green Park"
-          multiline
           variant="filled"
-          onInput={handleEventLocation}
+          color="success"
+          onInput={editEventLocation}
           defaultValue={thisEvent.location}
          />
          <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
@@ -168,7 +186,8 @@ function handleDay(e){
            <TextField id="input-with-sx"
              label="Location link"
              variant="standard"
-             onInput={handleLocationLink}
+             color="success"
+             onInput={editLocationLink}
              defaultValue={thisEvent.mapLink}
               />
          </Box>
@@ -177,8 +196,10 @@ function handleDay(e){
           <Select
             labelId="demo-simple-select-filled-label"
             id="demo-simple-select-filled"
-            defaultValue={thisEvent.size}
-            onChange={handleDogSize}>
+            value={thisEvent.size===undefined ? '':thisEvent.size }
+            name={thisEvent.size}
+            color="success"
+            onChange={editDogSize}>
             <MenuItem type='text' value={"Mini"}>Mini</MenuItem>
             <MenuItem type='text' value={"Small"}>Small</MenuItem>
             <MenuItem type='text' value={"Medium"}>Medium</MenuItem>
@@ -186,12 +207,19 @@ function handleDay(e){
             <MenuItem type='text' value={"All sizes"}>All sizes</MenuItem>
           </Select>
        </FormControl>
-        </DialogContent>
+        </DialogContent>}
+
         <DialogActions>
-        <Button variant="contained" color="error" >Delete</Button>
+          
+          <DeleteEvent close={handleClickClose} />
+
           <Update close={handleClickClose}/>
-          <Button variant="contained" onClick={handleClickClose}>Close</Button>
+
+          <Button variant="contained" onClick={handleClickClose}>
+          Close
+          </Button>
         </DialogActions>
+
       </Dialog>
     </div>
   );

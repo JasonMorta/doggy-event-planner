@@ -19,9 +19,20 @@ require('./routes/users/updateDog')(app);
 //events
 require('./routes/events/allEvents')(app);
 require('./routes/events/newEvent')(app);
-require('./routes/events/removeEvent')(app);
 require('./routes/events/updateEvent')(app);
+require('./routes/events/incLikes')(app);
+require('./routes/events/decLikes')(app);
+require('./routes/events/deleteEvent')(app);
 require('./routes/events/OneEvent')(app);
+
+//comments
+require('./routes/comments/addComment')(app);
+require('./routes/comments/removeComment')(app);
+require('./routes/comments/updateComment')(app);
+require('./routes/comments/findAllComments')(app);
+require('./routes/comments/findOneComment')(app);
+
+
 
 //store API-key in
 const uri = process.env.DB_API_KEY;

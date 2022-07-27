@@ -1,0 +1,39 @@
+.commentBlock {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 50px 0px;
+    height: 350px;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    
+}
+
+.commentsList {
+ overflow: auto;
+
+}
+
+.comment-icons {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+}
+
+.comment-icons img {
+    width: 20px;
+    cursor: pointer;
+    margin-bottom:5px;
+    transition: ease-in-out 0.3s;
+}
+
+.comment-icons img:hover {
+    transform: scale(1.1) rotate(-4deg);
+    transition: ease-in-out 0.3s;
+}
+
+.comment-icons img:active {
+
+}

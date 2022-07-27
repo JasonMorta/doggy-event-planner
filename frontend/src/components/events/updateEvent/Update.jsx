@@ -4,25 +4,25 @@ import { sharedState } from '../../App'
 
 export default function Update(props) {
 
+  //shared
 let state = useContext(sharedState)
 
 let [loggedIn, setLoggedIn, dogOwners, setDogOwners, allEvents, setAllEvents, comments, setComments, editButton, setEditButton, eventId, setEventId,thisEvent, setThisEvent, update, setUpdate  ] = state
 
-
- async function addEvent(e){
+//Handle updating a single event
+ async function Update(e){
   setUpdate(false)
-  console.log(update)
   await fetch("/updateEvent", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        id: eventId,
+        id: thisEvent._id,
         heading: thisEvent.heading,
         shortDes: thisEvent.description,
         time: thisEvent.time,
-        day: thisEvent.day,
+        date: thisEvent.date,
         location: thisEvent.location,
         mapLink: thisEvent.link,
         dogSize: thisEvent.size,
@@ -51,7 +51,7 @@ let [loggedIn, setLoggedIn, dogOwners, setDogOwners, allEvents, setAllEvents, co
    <Button 
     variant="contained" 
     color="success" 
-    onClick={addEvent}
+    onClick={Update}
     >
     Update
     </Button>
