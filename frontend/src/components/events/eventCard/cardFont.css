@@ -5,6 +5,49 @@
  src: url("../../../static/fonts/MiniStory.ttf")
 }
 
+@font-face {
+ font-family: ambang;
+ font-style: normal;
+ font-weight: normal;
+ src: url("../../../static/fonts/aAmbangResesi.ttf")
+}
+
+.event-card  {
+ font-family: mini-story  ;
+}
+
 .event-card h1 {
- font-family: mini-story !important ;
+ margin: 5px 0px 0px 0px;
+ font-size: x-large;
+}
+
+.event-card p  {
+ font-family: mini-story  ;
+ font-weight: 600;
+ margin: 0;
+}
+
+.event-details p {
+ font-family: ambang;
+ font-weight: 400 !important;
+
+}
+
+.event-details {
+ margin-top: 5px;
+ line-height: 0.3125rem;
+}
+
+.details {
+ position: relative;
+ opacity: 0.9;
+
+}
+
+.details p {
+ margin: 0px 0px 5px;
+}
+
+.heading-container {
+ 
 }

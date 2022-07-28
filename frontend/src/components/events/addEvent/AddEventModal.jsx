@@ -7,7 +7,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import AddLinkIcon from '@mui/icons-material/AddLink';
 import './addEventModal.css'
-import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
+import { createTheme, FormControl, InputLabel, MenuItem, Select, TextField, ThemeProvider } from '@mui/material';
 import { Box } from '@mui/system';
 import { useState } from 'react';
 import { useContext } from 'react';
@@ -114,24 +114,28 @@ export default function AddEventModal() {
  }//end of request function
 
 
+ 
+
 
   return (
+  
     <div className='addEvent'>
       <Button  variant="contained" color="error"  className='addEvent-btn' onClick={handleClickOpen}>
         ADD NEW EVENT
       </Button>
-      <Dialog
+      <Dialog 
         open={open}
         TransitionComponent={Transition}
         keepMounted
+       
         onClose={handleClickClose}
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle>{"Add a new event"}</DialogTitle>
+        <DialogTitle >{"Add a new event"}</DialogTitle>
         
        {loading ? <TextLoader /> 
        :
-       <DialogContent className='newEvent'>
+       <DialogContent className='newEvent'  >
         <TextField
           id="filled-textarea"
           label="Event name"
@@ -204,10 +208,11 @@ export default function AddEventModal() {
        }
       
         <DialogActions>
-          <Button variant="contained" onClick={addEvent}>Add</Button>
+          <Button variant="contained" color='success' onClick={addEvent}>Add</Button>
           
         </DialogActions>
       </Dialog>
     </div>
+
   );
 }
