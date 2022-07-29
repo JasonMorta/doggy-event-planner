@@ -47,7 +47,7 @@ export default function AddEventModal(props) {
   //Fill the fields with this current event values.
   async function handleClickOpen(e){
     setLoading(true)
-
+    console.log(allEvents);
     await fetch('OneEvent',{
      
      method: "POST",
@@ -58,10 +58,12 @@ export default function AddEventModal(props) {
     })
       .then(response => response.json())
       .then((data) => {
+       
         setThisEvent(data)
         setOpen(true);
         setTimeout(() => {
           setLoading(false)
+          console.log(e.target.dataset.listitem)
         }, 500);
     })
      
@@ -73,7 +75,7 @@ export default function AddEventModal(props) {
    setOpen(false);
    setUpdate(false)
    setThisEvent('')
-   console.log(thisEvent)
+   
  };
 
 
@@ -124,7 +126,7 @@ function editDay(e){
       <ReusableButton 
         variant="contained" 
         color="success" 
-        data-listitem={props.event} 
+        listitem={props.event} 
         className='addEvent-btn' 
         onClick={handleClickOpen}>
         Edit

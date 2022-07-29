@@ -120,6 +120,10 @@ export default function SignUpModal() {
 
 
   //Add new User to db & Log in
+  //The response will also contain a JWT token,
+  //this token will be stored in session storage,
+  //The token will be use to verify the user when 
+  //interacting with any buttons
   async function handleJoin(e){
    if (logIn){
     //log in user
@@ -143,9 +147,7 @@ export default function SignUpModal() {
       .then((response) => {
        console.log(response)
        if (response === "Username taken"){
-
           alert('Name taken')
-
        } else {
         console.log(response)
         setCurrentUser(response)//set user access

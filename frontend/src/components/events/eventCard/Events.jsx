@@ -32,7 +32,7 @@ export default function Events() {
       })
         .then((res) => res.json())
         .then((response) => {
-          console.log(response);
+         
           setAllEvents(response);
           if (response.length >= 7){
             setLimit(true)
@@ -45,7 +45,7 @@ export default function Events() {
           console.log(error);
         });
     }
-
+    
     getEvents();
   }, []);
 
@@ -89,11 +89,7 @@ export default function Events() {
               
           </div>
           <FavIcon id={event._id} fav={event.likes} />
-          {currentUser.roll === "admin" ? (
             <EditEventModal event={event._id} />
-          ) : (
-            <></>
-          )}
         </div>
       ))}
     </div>
