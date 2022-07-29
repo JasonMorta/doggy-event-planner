@@ -11,6 +11,8 @@ import './signIn.css'
 import CircularStatic from '../spinner/CircularLoader';
 import TextLoader from '../spinner/TextLoader';
 import { sharedState } from '../../App';
+import styled from '@emotion/styled';
+import ReusableButton from '../commonButton/ReusableButton';
 
 
 //This component will handle both the logIn and sign-up
@@ -201,64 +203,72 @@ export default function SignUpModal() {
     }, 300);
   }
 
+
   return (
     <div className='signUp-container'>
-      <p>{
-      logIn ? `Welcome back ${userName}`
-      : 
-      join ? `Welcome ${userName}`: ""}</p>
      <div className='logIn-btn'>
-       <Button variant="contained" color='success' disabled={logIn ? true : false} onClick={handleClickOpen}>
+       <ReusableButton 
+        variant="contained" 
+        color='error' 
+        disabled={logIn ? true : false} 
+        onClick={handleClickOpen}>
          Join
-       </Button>
-       <Button variant="contained" color='success'  onClick={logIn ? logInButton : logOut}>
+       </ReusableButton>
+       
+       <ReusableButton 
+        variant="contained" 
+        color='success'  
+        onClick={logIn ? logInButton : logOut}>
          {logIn ? 'Log out' : 'Log in'}
-       </Button>
+       </ReusableButton>
+       
      </div>
       <Dialog   open={open} onClose={handleClose}>
-        <DialogTitle>{logIn ? 'Log in' : 'Join'}</DialogTitle>
-        <DialogContent className='DialogContent'>
-          <DialogContentText>
-            Join our community today and find more friend for your
-            dog. <br/>
-            ▸ As a new member you can also share your thoughts in the comment section.
-      
-         </DialogContentText>
-         { clearField ? <TextLoader />
-           :
-           <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Dog name"
-            type="user name"
-            required
-            fullWidth
-            variant="standard"
-            onInput={handleUserName}
-            defaultValue={userName}/>
-          }
-          { clearField ? <TextLoader />
-           :
-          <TextField
-            
-            margin="dense"
-            id="password"
-            label="password"
-            type="email"
-            fullWidth
-            required
-            variant="standard"
-            onInput={handlePassword}
-            defaultValue={password} />
-           }
-        </DialogContent>
-       
-        <DialogActions>
-          <Button onClick={handleClose}>not now</Button>
-          {loading ? <CircularStatic />
-          :<Button onClick={handleJoin}>{logIn ? 'Log in' : 'Join'}</Button>}
-        </DialogActions>
+    <div className='dialog-container'>
+          <DialogTitle >{logIn ? 'Log in' : 'Join'}</DialogTitle>
+          <DialogContent  className='DialogContent'>
+            <DialogContentText>
+              Join our community today and find more friend for your
+              dog. <br/>
+              ▸ As a new member you can also share your thoughts in the comment section.
+        
+           </DialogContentText>
+           { clearField ? <TextLoader />
+             :
+             <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label="Dog name"
+              type="user name"
+              required
+              fullWidth
+              variant="standard"
+              onInput={handleUserName}
+              defaultValue={userName}/>
+            }
+            { clearField ? <TextLoader />
+             :
+            <TextField
+              
+              margin="dense"
+              id="password"
+              label="password"
+              type="email"
+              fullWidth
+              required
+              variant="standard"
+              onInput={handlePassword}
+              defaultValue={password} />
+             }
+          </DialogContent>
+         
+          <DialogActions >
+            <Button onClick={handleClose}>not now</Button>
+            {loading ? <CircularStatic />
+            :<Button onClick={handleJoin}>{logIn ? 'Log in' : 'Join'}</Button>}
+          </DialogActions>
+    </div>
       </Dialog>
     </div>
   );

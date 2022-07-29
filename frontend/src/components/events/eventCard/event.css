@@ -43,11 +43,12 @@
 .day-container h2 {
   z-index: 1;
   position: absolute;
-  font-size: medium;
-    width: 5rem;
-    top: -0.5625rem;
-    left: 0.75rem;
-    text-align: center;
+  font-size: 23px;
+  top: -0.5625rem;
+  left: 0.75rem;
+  white-space: pre-wrap;
+  text-align: center;
+  line-height: 1;
 }
 
 .day-container img {

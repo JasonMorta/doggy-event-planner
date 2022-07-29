@@ -8,32 +8,51 @@ import PanoramaIcon from '@mui/icons-material/Panorama';
 import InfoIcon from '@mui/icons-material/Info';
 import './nav.css'
 
+
+
+
+
 export default function NavBar() {
   const [value, setValue] = React.useState(0);
 
   let navigate = useNavigate()
+  
+
+  const navStyle = {
+    backgroundColor: '#efffafd6'
+  }
+
+  const btnStyle ={
+    color: '#8c92d7',
+    '&:selected': {
+      backgroundColor: '#efffafd6'
+    }
+  }
 
   return (
-    <Box sx={{ width: 500 }} className="navBar">
-      <BottomNavigation
-        showLabels
-        value={value}
-        onChange={(event, newValue) => {
+  <div className='nav-container' >
+      <Box  className="navBar" >
+        <BottomNavigation 
+          sx={navStyle}
+          showLabels
+          value={value}
+          onChange={(event, newValue) => {
           setValue(newValue);
-        }}
-      >
-
+          }}
+        >
   
-        <BottomNavigationAction onClick={()=>navigate('./')}  label="Home"  icon={<HomeIcon />} />
+        
+          <BottomNavigationAction  sx={btnStyle}  onClick={()=>navigate('./')}  label="Home"  icon={<HomeIcon />} />
 
-        <BottomNavigationAction onClick={()=>navigate('./Gallery')}  label="Gallery" icon={<PanoramaIcon />} />
-
-        <BottomNavigationAction onClick={()=>navigate('./About')} label="About"  icon={<InfoIcon />} />
-       
-    
-
-
-      </BottomNavigation>
-    </Box>
+          <BottomNavigationAction sx={btnStyle} onClick={()=>navigate('./Gallery')}  label="Gallery" icon={<PanoramaIcon />} />
+  
+          <BottomNavigationAction sx={btnStyle} onClick={()=>navigate('./About')} label="About"  icon={<InfoIcon />} />
+         
+      
+  
+  
+        </BottomNavigation>
+      </Box>
+  </div>
   );
 }

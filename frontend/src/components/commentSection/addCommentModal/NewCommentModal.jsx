@@ -15,6 +15,7 @@ import { useContext } from 'react';
 import { sharedState } from '../../../App';
 import CircularStatic from '../../spinner/CircularLoader';
 import TextLoader from '../../spinner/TextLoader';
+import ReusableButton from '../../commonButton/ReusableButton';
 
 
 
@@ -94,11 +95,17 @@ export default function NewCommentModal() {
 
   return (
     <div className='addCB'>
-      <Button  variant="contained" color="error"  className='addEvent-btn' onClick={handleClickOpen}>
+      <ReusableButton  
+        variant="contained" 
+        color="error"  
+        sx={{width: '400px'}}
+        className='addEvent-btn' 
+        onClick={handleClickOpen}>
         Add comment
-      </Button>
+      </ReusableButton>
       <Dialog
         open={open}
+      
         TransitionComponent={Transition}
         keepMounted
         onClose={handleClickClose}

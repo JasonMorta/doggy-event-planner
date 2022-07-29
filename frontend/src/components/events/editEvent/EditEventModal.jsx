@@ -17,6 +17,7 @@ import { sharedState } from '../../../App';
 import TextLoader from '../../spinner/TextLoader';
 import Update from '../updateEvent/Update';
 import DeleteEvent from '../deleteEvent/DeleteEvent';
+import ReusableButton from '../../commonButton/ReusableButton';
 
 
 //Handle the Modal functionality
@@ -120,9 +121,14 @@ function editDay(e){
      *** Get the id of the selected event with props.
      *** id will be stored in the button dataset attribute 
      */}
-      <Button variant="contained" color="success" data-listitem={props.event} className='addEvent-btn' onClick={handleClickOpen}>
+      <ReusableButton 
+        variant="contained" 
+        color="success" 
+        data-listitem={props.event} 
+        className='addEvent-btn' 
+        onClick={handleClickOpen}>
         Edit
-      </Button>
+      </ReusableButton>
       <Dialog
         open={open}
         TransitionComponent={Transition}

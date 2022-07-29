@@ -4,7 +4,7 @@ import ListItem from '@mui/material/ListItem';
 import Divider from '@mui/material/Divider';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Avatar from '@mui/material/Avatar';
+import hiDog from '../../static/images/hi.png'
 import Typography from '@mui/material/Typography';
 import './comments.css'
 import { useEffect } from 'react';
@@ -122,6 +122,7 @@ export default function CommentBlock() {
 
   return (
     <div className="commentBlock">
+      <img src={hiDog} alt='dag waving' className='hi-dog' />
       <h3>Comments</h3>
       {userRoll === "member" ? (
         <NewCommentModal />
@@ -150,7 +151,7 @@ export default function CommentBlock() {
                     >
                     </Typography>
                 
-                   <div  style={{backgroundColor: '#9e9e9e14', padding: "10px" }}>
+                   <div  style={{backgroundColor: 'rgb(242 225 230)', padding: "10px" }}>
                    <b>{`${user.user}`}</b>
 
 
@@ -184,8 +185,9 @@ export default function CommentBlock() {
                 {user.replies.map(reply => (
                   <ListItemText 
                   className='reply-text'
-                  sx={{
-                  marginLeft: 'auto'}}
+                  sx={{     
+                    borderRadius: '50px',
+                    marginLeft: 'auto'}}
                   primary=""
                   secondary={
                     <React.Fragment>

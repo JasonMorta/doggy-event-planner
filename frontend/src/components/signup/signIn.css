@@ -1,7 +1,6 @@
 .logIn-btn {
  display: flex;
  flex-direction: row;
- width: 155px;
  justify-content: space-between;
  align-items: center;
  margin: 20px;
@@ -9,4 +8,22 @@
 
 .signUp-container p {
  color: black;
+}
+
+.signUp-container {
+ position: absolute;
+ left: 85px;
+ top: -66px;
+}
+
+.dialog-container {
+
+ background-image: url('../../static/images/logInModal.png');
+ background-size: cover;
+ background-position-y: 31%;
+ background-repeat: no-repeat;
+}
+
+.dialog-main{
+ border-radius: 20px;
 }

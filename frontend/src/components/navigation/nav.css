@@ -2,3 +2,14 @@
  margin: 20px;
 
 }
+
+.nav-container {
+ background-image: url('../../static/images/navBg.png');
+ width: 100%;
+ background-repeat: no-repeat;
+z-index: 1;
+ display: flex;
+ justify-content: center;
+ background-position: center;
+ height: 130px;
+}
