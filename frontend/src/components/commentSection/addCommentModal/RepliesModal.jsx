@@ -54,18 +54,13 @@ export default function RepliesModal(props) {
   //then changes the input to a loading animation .5s,
   //then closes the modal.
   function handleClose(){
-    console.log(loading)
     props.handleReplySubmit()
      setLoading(true)
-     console.log(loading)
-
     setTimeout(() => {
       setLoading(false);
-      console.log(loading)
       setTimeout(() => {
         setOpen(false);
       }, 500);
-      
     }, 500);
 
   };
@@ -107,7 +102,7 @@ export default function RepliesModal(props) {
           }
        </>
         <DialogActions>
-          <Button onClick={handleClose} variant="text">REPLY... </Button>
+          <Button onClick={handleClose} variant="text">Reply </Button>
           
         </DialogActions>
       </Dialog>

@@ -92,6 +92,7 @@ export default function CommentBlock() {
  
   //handle the reply input changes
   function handleInput(e){
+    console.log(e.target.value);
     setThisReply(e.target.value)
 
   }
@@ -154,37 +155,26 @@ export default function CommentBlock() {
                       component="span"
                       variant="body2"
                       color="text.primary"
-                      key={nanoid()}
                     >
                     </Typography>
                 
-                   <div key={nanoid()}  style={{backgroundColor: 'rgb(242 225 230)', padding: "10px" }}>
-                   <b key={nanoid()}>{`${user.user}`}</b>
+                   <div  style={{backgroundColor: 'rgb(242 225 230)', padding: "10px" }}>
+                   <b>{`${user.user}`}</b>
 
 
-                   {userRoll === "member" ? (
-                      <RepliesModal 
-                        key={nanoid()}
+                  
+                      <RepliesModal
                         getUserId={()=> setCommentId(user._id)}
                         handleReplySubmit={handleReplySubmit}
                         thisReply={thisReply}
                         handleReplyInput={handleInput}/>
-                    ) : userRoll === "admin" ? (
-                      <RepliesModal 
-                        key={nanoid()}
-                        getUserId={()=> setCommentId(user._id)}
-                        handleReplySubmit={handleReplySubmit}
-                        thisReply={thisReply}
-                        handleReplyInput={handleInput}/>
-                    ) : (
-                      <></>
-                    )}
+                   
 
                    
 
                       {` — ${user.comment}`}
                    </div>
-                    <i key={nanoid()} className='comment-date'> {` on ${user.created.slice(0, 10)}`}</i>
+                    <i className='comment-date'> {` on ${user.created.slice(0, 10)}`}</i>
                     
                   </React.Fragment>
                   
@@ -200,9 +190,8 @@ export default function CommentBlock() {
                     marginLeft: 'auto'}}
                   primary=""
                   secondary={
-                    <React.Fragment  key={nanoid()}>
+                    <React.Fragment >
                       <Typography
-                       key={nanoid()}
                         sx={{display: "inline" }}
                         component="span"
                         variant="body2"
@@ -210,7 +199,7 @@ export default function CommentBlock() {
                       >
                       </Typography>
                       {`${reply.comment}`} <b>{ `—  ${reply.user}`}</b>
-                      <i  key={nanoid()} className='comment-date'> {` on ${reply.created.slice(0, 10)}`}</i>
+                      <i className='comment-date'> {` on ${reply.created.slice(0, 10)}`}</i>
                     </React.Fragment>
                     
                   }
@@ -229,12 +218,11 @@ export default function CommentBlock() {
                     alt="delete-icon"
                     data-del={user._id}
                     data-name={user.user}
-                    key={nanoid()}
                   />
                 </div>
               ) : currentUser.name === user.user ? (
                 userRoll === "member" ? (
-                  <div className="comment-icons"  key={nanoid()}>
+                  <div className="comment-icons">
                     <img
                       src={trash}
                       onClick={deleteComment}
