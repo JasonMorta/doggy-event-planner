@@ -4,7 +4,6 @@ import React, { useContext } from 'react'
 import './dash.css'
 import { BrowserRouter as Router, Route, Routes, useLocation} from "react-router-dom";
 import CommentBlock from '../components/commentSection/CommentBlock';
-import Footer from '../components/footer/Footer';
 import AllUsersDrawer from '../components/allUsers/AllUsersDrawer';
 import AddEventModal from '../components/events/addEvent/AddEventModal';
 import Events from '../components/events/eventCard/Events';
@@ -30,7 +29,7 @@ export default function Dash(props){
       <div className='dashboard'>
         <Events />
         <CommentBlock />
-      <Footer />
+      
       </div>
     </div>
   )

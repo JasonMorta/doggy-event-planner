@@ -1,0 +1,18 @@
+.replyToComments-btn {
+    position: absolute !important;
+    right: 30px;
+    top: 0%;
+    transform: translate(0px, 0%);
+    font-size: x-small !important;
+    color: #03a9f4 !important;
+    padding: 0 !important;
+}
+
+.send-reply {
+    text-align: end;
+}
+
+.reply-box {
+    
+    border: 0 !important;
+}

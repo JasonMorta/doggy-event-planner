@@ -56,6 +56,34 @@ exports.addComment = async (req, res) => {
 }
 
 
+//REPLY to a comment
+exports.replies =  async (req, res) => {
+      
+      try {
+            //Find event by id
+            await model.findOneAndUpdate(
+             {_id: req.body.id},
+
+             {$push: {replies: {
+                  comment: req.body.comment,
+                  user: req.body.user
+            }}},
+             {new: true, upsert: true });
+           
+
+            //return all comment documents
+            const events = await model.find({});
+            console.log("Comment Updated")
+            res.send(events) 
+      
+     
+      } catch(err) {
+            console.log(err)
+            res.send(err)
+      }              
+     }
+
+
 //DELETE one comment from the db
 exports.removeComment =  async (req, res) => {
 

@@ -1,17 +1,12 @@
 .dashboard {
-  
-
   width: 100%;
   max-width: 800px;
-  color: black;
-  font-size: small;
   position: relative;
 }
 
 .dashboard-container {
   max-width: 800px;
   margin: 0 20px;
-  width: 50vw;
   min-width: 320px;
 }
 

@@ -93,7 +93,7 @@ export default function AllUsersDrawer() {
 
 
   const list = (anchor) => (
-    <Box
+    <Box 
       sx={{ width: 250 }}
       role="presentation"
       onClick={toggleDrawer(anchor, closeDrawer)}
@@ -102,7 +102,7 @@ export default function AllUsersDrawer() {
       <List>
         {dogOwners.map((user, index) => (
           <ListItem key={user._id} disablePadding>
-            <ListItemButton >
+            <ListItemButton  >
               <ListItemIcon>
                 <AccountCircleIcon color='secondary' />
               </ListItemIcon>
@@ -123,15 +123,15 @@ export default function AllUsersDrawer() {
   return (
     <div  className='all-users-btn'>
    
-        <React.Fragment key={'right'}>
+        <React.Fragment key={'right'} >
           <Button onClick={toggleDrawer('right', true)} 
-           
             variant="contained" 
             color="error">{'All users'}</Button>
           <Drawer
             anchor={'right'}
             open={state['right']}
             onClose={toggleDrawer('right', false)}
+            
           >
             {list('right')}
           </Drawer>

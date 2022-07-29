@@ -28,7 +28,7 @@ export default function AddEventModal() {
  //shared state
  let state = useContext(sharedState)
  //deconstruct state
- let [loggedIn, setLoggedIn, dogOwners, setDogOwners, allEvents, setAllEvents, comments, setComments, editButton, setEditButton, eventId, setEventId,thisEvent, setThisEvent, update, setUpdate] = state
+ let [loggedIn, setLoggedIn, dogOwners, setDogOwners, allEvents, setAllEvents, comments, setComments, editButton, setEditButton, eventId, setEventId, thisEvent, setThisEvent,update, setUpdate, thisComment, setThisComment, commentId, setCommentId, currentUser, setCurrentUser,userRoll, setUserRoll,limit, setLimit ] = state
 
  
  //Handle the Modal button functionality
@@ -104,6 +104,11 @@ export default function AddEventModal() {
        .then(( response) => {
         setAllEvents(response)
         setThisEvent('')
+        if (response.length >= 7){
+          setLimit(true)
+        } else {
+          setLimit(false)
+        }
  
        })
         .catch((error) => {
@@ -114,20 +119,20 @@ export default function AddEventModal() {
  }//end of request function
 
 
- 
+  
 
 
   return (
   
     <div className='addEvent'>
-      <Button  variant="contained" color="error"  className='addEvent-btn' onClick={handleClickOpen}>
-        ADD NEW EVENT
+      <Button  variant="contained" color="error" disabled={limit ? true:false}  className='addEvent-btn' onClick={handleClickOpen}>
+        {limit? "Limit reached":"ADD NEW EVENT"}
       </Button>
-      <Dialog 
+      <Dialog
+        
         open={open}
         TransitionComponent={Transition}
         keepMounted
-       
         onClose={handleClickClose}
         aria-describedby="alert-dialog-slide-description"
       >
@@ -135,7 +140,7 @@ export default function AddEventModal() {
         
        {loading ? <TextLoader /> 
        :
-       <DialogContent className='newEvent'  >
+       <DialogContent className='newEvent'>
         <TextField
           id="filled-textarea"
           label="Event name"

@@ -5,8 +5,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  /* font-size: calc(10px + 2vmin);
+  color: white; */
   position: relative;
 }
 
@@ -14,3 +14,19 @@
   color: #61dafb;
 }
 
+
+Button {
+  color: #000 !important;
+    background-color: #d8fa84 !important;
+}
+
+.MuiDialog-paper {
+  /* background-image: url('./static/images/logInModal.png');
+  background-size: 103%;
+  width: 451px;
+  border-radius: 35px !important;
+  color: black !important;
+  background-position-y: center;
+  background-repeat: no-repeat; */
+  background-color: #f5ffdb !important;
+}

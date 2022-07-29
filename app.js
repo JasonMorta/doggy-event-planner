@@ -29,6 +29,7 @@ require('./routes/events/OneEvent')(app);
 
 //comments
 require('./routes/comments/addComment')(app);
+require('./routes/comments/replies')(app);
 require('./routes/comments/removeComment')(app);
 require('./routes/comments/updateComment')(app);
 require('./routes/comments/findAllComments')(app);

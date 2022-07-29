@@ -3,7 +3,9 @@
  margin: 4px;
 }
 
-
+.addEventDialog {
+ background-image: none !important;
+}
 
  .newEvent {
  display: flex;

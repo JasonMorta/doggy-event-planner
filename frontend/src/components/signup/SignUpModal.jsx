@@ -64,10 +64,6 @@ export default function SignUpModal() {
   }
 
   //use must enter a name and password
-
-
-
-
   //Log-in user
   async function handleLogIn(){
    setLoading(true)
@@ -88,8 +84,9 @@ export default function SignUpModal() {
      .then((response) => {
       if(response===null){
        alert("User not found");
-       setOpen(false);
+       //setOpen(false);
        setLoading(false);
+       setLogIn(false)
       } else {
        setCurrentUser(response)//set user access
        setUserRoll(response.roll)
@@ -97,7 +94,7 @@ export default function SignUpModal() {
           setOpen(false);
           setJoin(true);
           setLoading(false);
-          setLogIn(false)
+          setLogIn(true)
          }, 500);
         }
         
@@ -110,6 +107,14 @@ export default function SignUpModal() {
     
   }// end of function
 
+
+
+  /* 
+  ==============================================================
+  *  When use logs in they receive a JWT token.
+  * Token will be used to verify user account when making updates.
+  ===============================================================
+  */
 
 
   //Add new User to db & Log in
@@ -150,7 +155,6 @@ export default function SignUpModal() {
           setLogIn(false)
           console.log(currentUser)
         }, 500);
-
        }
   
        })
@@ -158,12 +162,9 @@ export default function SignUpModal() {
       .catch((error) => {
         console.log(error)
       });
-
    }
     
   }// end of function
-
-
 
 
 
@@ -178,15 +179,19 @@ export default function SignUpModal() {
   ===========================================================
   */
   function logInButton(e){
-    if(logIn){
       setLogIn(false)
       setUserName('')
       setPassword('')
       setCurrentUser('')
       setUserRoll('')
       
-    }else{
+ 
+  }
+
+  //Log Out button
+  function logOut(){
     setLogIn(true)
+    setUserRoll('none')
     setUserName('')
     setPassword('')
     setOpen(true);
@@ -195,21 +200,24 @@ export default function SignUpModal() {
       setClearField(false)
     }, 300);
   }
-  }
 
   return (
-    <div className='signUp-container'>{join ? <p>Welcome {newUser}</p>: ""}
+    <div className='signUp-container'>
+      <p>{
+      logIn ? `Welcome back ${userName}`
+      : 
+      join ? `Welcome ${userName}`: ""}</p>
      <div className='logIn-btn'>
-       <Button variant="contained" color='success' onClick={handleClickOpen}>
+       <Button variant="contained" color='success' disabled={logIn ? true : false} onClick={handleClickOpen}>
          Join
        </Button>
-       <Button variant="contained" color='success' onClick={logInButton}>
+       <Button variant="contained" color='success'  onClick={logIn ? logInButton : logOut}>
          {logIn ? 'Log out' : 'Log in'}
        </Button>
      </div>
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog   open={open} onClose={handleClose}>
         <DialogTitle>{logIn ? 'Log in' : 'Join'}</DialogTitle>
-        <DialogContent>
+        <DialogContent className='DialogContent'>
           <DialogContentText>
             Join our community today and find more friend for your
             dog. <br/>

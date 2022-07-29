@@ -1,24 +1,37 @@
+
+.event-main-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  max-width: 600px;
+  min-width: 500px;
+  margin: auto;
+  font-size: large;
+  color: black;
+}
+
+
 .event-card {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: 9.0625rem;
-  
+  width: 37.5rem;
+  height: 15.625rem;
+  background-size: cover;
   align-items: center;
-  background-color: #F3CA4A;
   position: relative;
-  font-size: initial;
-  transition: linear .3s;
+  transition: .2s;
   transform: translate(0, 0rem);
   margin-bottom: 0.9375rem;
   border-radius: 2.1875rem;
-  max-width: 450px;
+  padding: 0px 10px;
+  
 }
 
 .event-card:hover {
-  box-shadow: 0 0 0.1875rem gray;
+  box-shadow: 0 0 0.1875rem rgb(113, 255, 194);
   transform: translate(0rem, 0rem);
-  transition: linear .3s;
+  transition: .2s;
 }
 
 .day-container {
@@ -30,9 +43,10 @@
 .day-container h2 {
   z-index: 1;
   position: absolute;
-  font-size: small;
+  font-size: medium;
     width: 5rem;
-    top: 0.75rem;
+    top: -0.5625rem;
+    left: 0.75rem;
     text-align: center;
 }
 
@@ -62,13 +76,14 @@
 
 .main-content {
   width: 50%;
-    min-width: 11.5625rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    height: 100%;
-    position: relative;
-    min-width: 192px;
+  min-width: 11.5625rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 100%;
+  position: relative;
+  min-width: 192px;
+  align-items: center;
     
 }
 
@@ -78,9 +93,6 @@
   bottom: 0;
 }
 
-.main-content p {
-  font-size: small;
-}
 
 .link-location {
   display: flex;
@@ -95,10 +107,7 @@
   cursor: pointer;
 }
 
-.event-details p {
 
-  margin-bottom: 0;
-}
 
 .likes {
   position: absolute;

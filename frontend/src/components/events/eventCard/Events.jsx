@@ -1,27 +1,28 @@
 import React, { useContext, useEffect } from 'react'
 import './event.css'
 import './cardFont.css'
-import cloud from '../../../static/images/cloud.png'
+
 import { sharedState } from '../../../App'
 import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
 import EditEventModal from '../editEvent/EditEventModal'
 import FavIcon from '../favIcon/FavIcon'
 import { Link } from 'react-router-dom';
 import dogsArray from './DogImageArray'
+import { useState } from 'react';
 
 export default function Events() {
 
   //shared state
   let state = useContext(sharedState)
   //deconstruct state
-  let [loggedIn, setLoggedIn, dogOwners, setDogOwners, allEvents, setAllEvents, comments, setComments, editButton, setEditButton, eventId, setEventId, thisEvent, setThisEvent,update, setUpdate, thisComment, setThisComment, commentId, setCommentId, currentUser, setCurrentUser ] = state
+  let [loggedIn, setLoggedIn, dogOwners, setDogOwners, allEvents, setAllEvents, comments, setComments, editButton, setEditButton, eventId, setEventId, thisEvent, setThisEvent,update, setUpdate, thisComment, setThisComment, commentId, setCommentId, currentUser, setCurrentUser,userRoll, setUserRoll,limit, setLimit ] = state
 
-
+  
 
 
   //Get all task from API on page load
   useEffect(() => {
-    console.log(thisEvent)
+   
     async function getEvents() {
       await fetch("/allEvents", {
         method: "GET",
@@ -33,25 +34,38 @@ export default function Events() {
         .then((response) => {
           console.log(response);
           setAllEvents(response);
+          if (response.length >= 7){
+            setLimit(true)
+          } else {
+            setLimit(false)
+          }
         })
         .catch((error) => {
           console.log("error");
           console.log(error);
         });
     }
+
     getEvents();
   }, []);
 
 
+
+   
+   
   return (
-    <>
+    <div className='event-main-container'>
       {allEvents.map((event, index) => (
-        <div className="event-card" key={event._id}>
+       
+        <div className="event-card" style={{
+          backgroundImage: `url(${dogsArray[index].src})`
+        
+        }} key={dogsArray[index].id}>
           <div className="day-container">
             <h2>{event.date}</h2>
-            <img src={cloud} alt="day_image" />
+            
           </div>
-          <div className="main-content">
+          <div className="main-content" style={index % 2 === 0 ? {marginLeft:'auto'}:{marginRight:'auto'}}>
             <div className="heading-container">
                 <h1>{event.heading}</h1>
             </div>
@@ -72,7 +86,7 @@ export default function Events() {
               *** use index argument to display the dogs array images. 
               *** Use modulus operator to switch a css value depending on the index.
               */}
-              <img src={dogsArray[index].src} alt="dogs" style={index % 2 === 0 ? {right: '-8vw'} : {left: '-8vw'}}  />
+              
           </div>
           <FavIcon id={event._id} fav={event.likes} />
           {currentUser.roll === "admin" ? (
@@ -82,6 +96,6 @@ export default function Events() {
           )}
         </div>
       ))}
-    </>
+    </div>
   );
 }

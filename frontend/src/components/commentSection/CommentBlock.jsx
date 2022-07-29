@@ -14,6 +14,8 @@ import trash from '../../static/images/trash.png'
 import edit from '../../static/images/edit.png'
 import NewCommentModal from './addCommentModal/NewCommentModal';
 import EditComment from './editComment/EditComment';
+import RepliesModal from './addCommentModal/RepliesModal';
+import { useState } from 'react';
 
 
 
@@ -26,10 +28,12 @@ export default function CommentBlock() {
   let [loggedIn, setLoggedIn, dogOwners, setDogOwners, allEvents, setAllEvents, comments, setComments, editButton, setEditButton, eventId, setEventId, thisEvent, setThisEvent,update, setUpdate, thisComment, setThisComment, commentId, setCommentId, currentUser, setCurrentUser,userRoll, setUserRoll ] = state
 
   const [open, setOpen] = React.useState(false);
-  const [deleted, setDeleted] = React.useState(false)
+  const [deleted, setDeleted] = React.useState(false);
+  const [thisReply, setThisReply] = React.useState('')
 
   //return all comment from db
   useEffect(() => {
+    setCommentId('')
     async function getComments(){
         await fetch("/findAllComments", {
           method: "POST",
@@ -52,9 +56,6 @@ export default function CommentBlock() {
 
 
   //DELETE Comment
-
-
-
   async function deleteComment(e){
     setDeleted(false)
 
@@ -81,7 +82,42 @@ export default function CommentBlock() {
       setDeleted(true)
   }
 
+
  
+  //handle the reply input changes
+  function handleInput(e){
+    setThisReply(e.target.value)
+
+  }
+
+  //Reply to comments
+   async function handleReplySubmit(e){
+      
+    await fetch("/replies", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        id: commentId,
+        user: currentUser.name,
+        comment: thisReply,
+      }),
+      //handle errors
+    })
+      .then((res) => res.json())
+      .then(( response) => {
+      setComments(response);
+      setThisReply('✔')
+      })
+       .catch((error) => {
+        console.log(error);
+      setThisReply('⁉')
+      });
+
+      setTimeout(() => {
+        setThisReply(' ')
+      }, 2000);
+    
+  }
 
 
   return (
@@ -100,23 +136,73 @@ export default function CommentBlock() {
       >
         {comments.map((user) => (
           <>
-            <ListItem alignItems="flex-start" key={user._id}>
+            <ListItem alignItems="flex-start" key={user._id} sx={{flexDirection: 'column'}}>
               <ListItemText
+                className='comment-text'
                 primary=""
                 secondary={
                   <React.Fragment>
                     <Typography
-                      sx={{ display: "inline" }}
+                      sx={{ display: "inline"}}
                       component="span"
                       variant="body2"
                       color="text.primary"
                     >
-                      {`${user.user}`}
                     </Typography>
-                    {` — ${user.comment}`}
+                
+                   <div  style={{backgroundColor: '#9e9e9e14', padding: "10px" }}>
+                   <b>{`${user.user}`}</b>
+
+
+                   {userRoll === "member" ? (
+                      <RepliesModal 
+                        getUserId={()=> setCommentId(user._id)}
+                        handleReplySubmit={handleReplySubmit}
+                        thisReply={thisReply}
+                        handleReplyInput={handleInput}/>
+                    ) : userRoll === "admin" ? (
+                      <RepliesModal 
+                        getUserId={()=> setCommentId(user._id)}
+                        handleReplySubmit={handleReplySubmit}
+                        thisReply={thisReply}
+                        handleReplyInput={handleInput}/>
+                    ) : (
+                      <></>
+                    )}
+
+                   
+
+                      {` — ${user.comment}`}
+                   </div>
+                    <i key={user._id} className='comment-date'> {` on ${user.created.slice(0, 10)}`}</i>
+                    
                   </React.Fragment>
+                  
                 }
               />
+              {/* replies on comment */}
+                {user.replies.map(reply => (
+                  <ListItemText 
+                  className='reply-text'
+                  sx={{
+                  marginLeft: 'auto'}}
+                  primary=""
+                  secondary={
+                    <React.Fragment>
+                      <Typography
+                        sx={{display: "inline" }}
+                        component="span"
+                        variant="body2"
+                        color="text.primary"
+                      >
+                      </Typography>
+                      {`${reply.comment}`} <b>{ `—  ${reply.user}`}</b>
+                      <i className='comment-date'> {` on ${reply.created.slice(0, 10)}`}</i>
+                    </React.Fragment>
+                    
+                  }
+              />
+                ))}
 
               {/*
                *** members can only  delete their own comment

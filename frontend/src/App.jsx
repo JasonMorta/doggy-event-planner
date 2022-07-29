@@ -35,11 +35,12 @@ function App() {
   const [thisComment, setThisComment] = useState("")
   const [comments, setComments] = useState([]);
   const [commentId, setCommentId] = useState('');
+  const[limit, setLimit]=useState(false);
 
 
   return (
     //To pass and sharedState with all components, we use the .Provider element and pass data through value={[stateValues]}
-    <sharedState.Provider value={[loggedIn, setLoggedIn, dogOwners, setDogOwners, allEvents, setAllEvents, comments, setComments, editButton, setEditButton, eventId, setEventId, thisEvent, setThisEvent,update, setUpdate, thisComment, setThisComment, commentId, setCommentId, currentUser, setCurrentUser,userRoll, setUserRoll ]}>
+    <sharedState.Provider value={[loggedIn, setLoggedIn, dogOwners, setDogOwners, allEvents, setAllEvents, comments, setComments, editButton, setEditButton, eventId, setEventId, thisEvent, setThisEvent,update, setUpdate, thisComment, setThisComment, commentId, setCommentId, currentUser, setCurrentUser,userRoll, setUserRoll,limit, setLimit ]}>
     <div className="App">
       
     
