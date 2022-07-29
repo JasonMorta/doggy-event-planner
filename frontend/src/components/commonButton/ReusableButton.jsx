@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
+import './buttonStyle.css'
 
 
 //This button will be used in tother components
@@ -10,6 +11,7 @@ export default function ReusableButton(props) {
     backgroundColor: "#efffafd6",
     color: 'gray',
     margin: '0 5px',
+    minWidth: '100px',
     borderRadius: '20px',
     border: '0px solid gray',
     boxShadow: 'none',
@@ -23,7 +25,7 @@ export default function ReusableButton(props) {
 
       <Button 
         variant={props.variant}
-        classes={props.classes}
+        className='com-btn'
         color={props.color}
         disabled={props.disabled}
         size={props.size}

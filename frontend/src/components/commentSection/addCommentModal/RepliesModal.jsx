@@ -107,7 +107,7 @@ export default function RepliesModal(props) {
           }
        </>
         <DialogActions>
-          <Button onClick={handleClose} variant="text">Reply</Button>
+          <Button onClick={handleClose} variant="text">REPLY... </Button>
           
         </DialogActions>
       </Dialog>

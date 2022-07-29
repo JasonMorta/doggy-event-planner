@@ -66,13 +66,18 @@ export default function NewCommentModal() {
 
 
   //Add new Comment with API request
+  //Send token with request for validation.
+  //if the token is good, server will respond with new data
  async function addComment(e) {
 
      setOpen(false);
      //Add new user to db
      await fetch("/addComment", {
        method: "POST",
-       headers: { "Content-Type": "application/json" },
+       headers: { 
+        "Content-Type": "application/json",
+        authorization: `Bearer ${sessionStorage.getItem(currentUser.name)}` 
+      },
        body: JSON.stringify({
         user: currentUser.name,
         comment: thisComment,
@@ -81,8 +86,11 @@ export default function NewCommentModal() {
      })
        .then((res) => res.json())
        .then(( response) => {
-        setComments(response);
-        console.log(response)
+        if (response.err){
+          alert('Authentication failed')
+        } else {
+          setComments(response)
+        }
        })
         .catch((error) => {
          console.log(error);

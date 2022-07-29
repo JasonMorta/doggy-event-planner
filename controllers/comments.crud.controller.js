@@ -3,7 +3,8 @@ const jwt = require('jsonwebtoken')
 require('dotenv').config()
 
 
-//FIND all comments
+
+//FIND One comment by id
 exports.findOneComment = async (req, res)=>{
 
  try {
@@ -15,11 +16,11 @@ exports.findOneComment = async (req, res)=>{
  }
 }
 
-//FIND One comment by id
+//FIND all comments
 exports.findAllComments = async (req, res)=>{
 
       try {
-            const events = await  model.find({});
+            const events = await  model.find({}).sort({ "created" : -1});
             res.send(events)  
       } catch {
             console.log(err)
@@ -28,30 +29,31 @@ exports.findAllComments = async (req, res)=>{
      }
 
 //ADD a comment document to db
-exports.addComment = async (req, res) => {
+exports.addComment = async (req, res, next) => {
 
+      const auth  = req.headers['authorization'] //Get token from sessionStorage/frontend
+      const token = auth.split(' ')[1]
  //handle runtime errors
  try {
-        //define the newOwner. This will also include the other schema tags.
-       const newComment = new model({
-             user: req.body.user,
-             comment: req.body.comment,
-             
-       });
+      const verify = jwt.verify(token, process.env.SECRET_KEY); //verify token secret-key
+      const newComment = new model({
+            user: req.body.user,
+            comment: req.body.comment,
+      });
 
-       //save the new user to db
-       await newComment.save();
+      //save the new user to db
+      await newComment.save();
 
-       //return all document
-       const all = await model.find({});
-       res.json(all)
-
-       //res.send(dogOwner); //send the same data back 
-       console.log("New Comment Added");
+      //return all document
+      const data = await model.find({}).sort({ "created" : -1});;
+      res.send(data)
+      console.log("New Comment Added");
+      
 
  } catch (err) {
        console.log(err)
-       res.send(err)
+       res.status(401).send({'err': 'Bad JWT!'})
+      
  }  
 }
 
@@ -72,7 +74,7 @@ exports.replies =  async (req, res) => {
            
 
             //return all comment documents
-            const events = await model.find({});
+            const events = await model.find({}).sort({ "created" : -1});
             console.log("Comment Updated")
             res.send(events) 
       
@@ -93,7 +95,7 @@ exports.removeComment =  async (req, res) => {
        )
 
        //find & return all comment documents
-       const comments =  await model.find({});
+       const comments =  await model.find({}).sort({ "created" : -1});
        res.send(comments);
        console.log("Comment delete")
 
@@ -115,7 +117,7 @@ exports.updateComment =  async (req, res) => {
        { new: true })
        
        //return all comment documents
-       const events = await model.find({});
+       const events = await model.find({}).sort({ "created" : -1});
        console.log("Comment Updated")
        res.send(events) 
  

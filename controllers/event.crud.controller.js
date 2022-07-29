@@ -6,7 +6,7 @@ require('dotenv').config()
 exports.all = async (req, res)=>{
 
       try {
-            const events = await  model.find({});
+            const events = await  model.find({}).sort({ "created" : -1});
             res.send(events)  
       } catch {
             console.log(err)

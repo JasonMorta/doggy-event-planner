@@ -16,6 +16,7 @@ import NewCommentModal from './addCommentModal/NewCommentModal';
 import EditComment from './editComment/EditComment';
 import RepliesModal from './addCommentModal/RepliesModal';
 import { useState } from 'react';
+import { nanoid } from 'nanoid'
 
 
 
@@ -64,7 +65,8 @@ export default function CommentBlock() {
     await fetch("/removeComment", {
       method: "DELETE",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        authorization: `Bearer ${sessionStorage.getItem(currentUser.name)}`,
       },
       body: JSON.stringify({
         id: e.target.dataset.del,
@@ -73,7 +75,11 @@ export default function CommentBlock() {
     })
       .then((res) => res.json())
       .then((response) => {
-       setComments(response)
+       if (response.err){
+          alert('Authentication failed')
+        } else {
+          setComments(response)
+        }
       })
       .catch((error) =>{
        console.log(error)
@@ -137,7 +143,7 @@ export default function CommentBlock() {
       >
         {comments.map((user) => (
           <>
-            <ListItem alignItems="flex-start" key={user._id} sx={{flexDirection: 'column'}}>
+            <ListItem alignItems="flex-start" key={nanoid()} sx={{flexDirection: 'column'}}>
               <ListItemText
                 className='comment-text'
                 primary=""
@@ -148,21 +154,24 @@ export default function CommentBlock() {
                       component="span"
                       variant="body2"
                       color="text.primary"
+                      key={nanoid()}
                     >
                     </Typography>
                 
-                   <div  style={{backgroundColor: 'rgb(242 225 230)', padding: "10px" }}>
-                   <b>{`${user.user}`}</b>
+                   <div key={nanoid()}  style={{backgroundColor: 'rgb(242 225 230)', padding: "10px" }}>
+                   <b key={nanoid()}>{`${user.user}`}</b>
 
 
                    {userRoll === "member" ? (
                       <RepliesModal 
+                        key={nanoid()}
                         getUserId={()=> setCommentId(user._id)}
                         handleReplySubmit={handleReplySubmit}
                         thisReply={thisReply}
                         handleReplyInput={handleInput}/>
                     ) : userRoll === "admin" ? (
                       <RepliesModal 
+                        key={nanoid()}
                         getUserId={()=> setCommentId(user._id)}
                         handleReplySubmit={handleReplySubmit}
                         thisReply={thisReply}
@@ -175,7 +184,7 @@ export default function CommentBlock() {
 
                       {` — ${user.comment}`}
                    </div>
-                    <i key={user._id} className='comment-date'> {` on ${user.created.slice(0, 10)}`}</i>
+                    <i key={nanoid()} className='comment-date'> {` on ${user.created.slice(0, 10)}`}</i>
                     
                   </React.Fragment>
                   
@@ -184,14 +193,16 @@ export default function CommentBlock() {
               {/* replies on comment */}
                 {user.replies.map(reply => (
                   <ListItemText 
+                  key={nanoid()}
                   className='reply-text'
                   sx={{     
                     borderRadius: '50px',
                     marginLeft: 'auto'}}
                   primary=""
                   secondary={
-                    <React.Fragment>
+                    <React.Fragment  key={nanoid()}>
                       <Typography
+                       key={nanoid()}
                         sx={{display: "inline" }}
                         component="span"
                         variant="body2"
@@ -199,7 +210,7 @@ export default function CommentBlock() {
                       >
                       </Typography>
                       {`${reply.comment}`} <b>{ `—  ${reply.user}`}</b>
-                      <i className='comment-date'> {` on ${reply.created.slice(0, 10)}`}</i>
+                      <i  key={nanoid()} className='comment-date'> {` on ${reply.created.slice(0, 10)}`}</i>
                     </React.Fragment>
                     
                   }
@@ -211,18 +222,19 @@ export default function CommentBlock() {
                *** Admin can delete any comment
                */}
               {userRoll === "admin" ? (
-                <div className="comment-icons">
+                <div className="comment-icons"  key={nanoid()}>
                   <img
                     src={trash}
                     onClick={deleteComment}
                     alt="delete-icon"
                     data-del={user._id}
                     data-name={user.user}
+                    key={nanoid()}
                   />
                 </div>
               ) : currentUser.name === user.user ? (
                 userRoll === "member" ? (
-                  <div className="comment-icons">
+                  <div className="comment-icons"  key={nanoid()}>
                     <img
                       src={trash}
                       onClick={deleteComment}
