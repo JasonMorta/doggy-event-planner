@@ -34,7 +34,6 @@ export default function RepliesModal(props) {
 
   //open the modal
   const handleOpen = () => {
- 
     props.getUserId()
     setLoading(true)
     setOpen(true)
