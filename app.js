@@ -1,6 +1,7 @@
 const express = require("express");
 require('isomorphic-fetch');
 const app = express();
+const path = require('path')
 app.use(express.json());
 const mongoose = require("mongoose");
 const bodyParser = require('body-parser');
