@@ -1,21 +1,37 @@
-import { Button } from '@mui/material'
-import React, { useContext } from 'react'
-import { sharedState } from '../../../App'
+import { Button } from "@mui/material";
+import React, { useContext } from "react";
+import { sharedState } from "../../../App";
 
 export default function Update(props) {
-
   //shared
-let state = useContext(sharedState)
+  let state = useContext(sharedState);
 
-let [loggedIn, setLoggedIn, dogOwners, setDogOwners, allEvents, setAllEvents, comments, setComments, editButton, setEditButton, eventId, setEventId,thisEvent, setThisEvent, update, setUpdate  ] = state
+  let [
+    ,
+    ,
+    ,
+    ,
+    ,
+    setAllEvents,
+    ,
+    ,
+    ,
+    ,
+    ,
+    ,
+    thisEvent,
+    ,
+    ,
+    setUpdate,
+  ] = state;
 
-//Handle updating a single event
- async function Update(e){
-  setUpdate(false)
-  await fetch("/updateEvent", {
+  //Handle updating a single event
+  async function Update(e) {
+    setUpdate(false);
+    await fetch("/updateEvent", {
       method: "PUT",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         id: thisEvent._id,
@@ -31,29 +47,21 @@ let [loggedIn, setLoggedIn, dogOwners, setDogOwners, allEvents, setAllEvents, co
     })
       .then((res) => res.json())
       .then((response) => {
-       setAllEvents(response)
-       setUpdate(true)
-       console.log(response)
-      
-
+        setAllEvents(response);
+        setUpdate(true);
+        console.log(response);
       })
-      .catch((error) =>{
-       console.log(error)
-         alert(error)
+      .catch((error) => {
+        console.log(error);
+        alert(error);
       });
 
-
-     return props.close()
- }// end
-
+    return props.close();
+  } // end
 
   return (
-   <Button 
-    variant="contained" 
-    color="success" 
-    onClick={Update}
-    >
-    Update
+    <Button variant="contained" color="success" onClick={Update}>
+      Update
     </Button>
-  )
+  );
 }

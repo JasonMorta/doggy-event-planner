@@ -2,8 +2,6 @@ import * as React from 'react';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
-import IconButton from '@mui/material/IconButton';
-import StarBorderIcon from '@mui/icons-material/StarBorder';
 
 function srcset(image, width, height, rows = 1, cols = 1) {
   return {
@@ -14,6 +12,9 @@ function srcset(image, width, height, rows = 1, cols = 1) {
   };
 }
 
+
+
+//Display a list of images with Material UI Custom image list component
 export default function Gallery() {
   return (
    <>
@@ -22,7 +23,6 @@ export default function Gallery() {
         sx={{
           width: 500,
           height: 650,
-          // Promote the list into its own layer in Chrome. This costs memory, but helps keeping high FPS.
           transform: 'translateZ(0)',
         }}
         rowHeight={200}
@@ -65,6 +65,9 @@ export default function Gallery() {
   );
 }
 
+
+//Gallery page images
+//Images obtained from https://dog.ceo/dog-api 
 const itemData = [
   {
     img: 'https://images.dog.ceo/breeds/chihuahua/n02085620_575.jpg',

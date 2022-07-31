@@ -11,21 +11,41 @@ import "./signIn.css";
 import CircularStatic from "../spinner/CircularLoader";
 import TextLoader from "../spinner/TextLoader";
 import { sharedState } from "../../App";
-import styled from "@emotion/styled";
 import ReusableButton from "../commonButton/ReusableButton";
 
 //This component will handle both the logIn and sign-up
 export default function SignUpModal() {
   let shareState = useContext(sharedState);
 
-  let [, , , , , , , , , , , , , , , , , , , , ,
-    setCurrentUser, ,
+  let [
+    ,
+    ,
+    ,
+    ,
+    ,
+    ,
+    ,
+    ,
+    ,
+    ,
+    ,
+    ,
+    ,
+    ,
+    ,
+    ,
+    ,
+    ,
+    ,
+    ,
+    ,
+    setCurrentUser,
+    ,
     setUserRoll,
   ] = shareState;
 
   //handle state functions
   const [open, setOpen] = useState(false);
-  const [newUser, setNewUser] = useState("");
   const [join, setJoin] = useState(false);
   const [loading, setLoading] = useState(false);
   const [clearField, setClearField] = useState(false);
@@ -140,14 +160,14 @@ export default function SignUpModal() {
           if (response === "Username taken") {
             alert("Name taken");
           } else {
-            setCurrentUser(response.data); //set user access
-            setUserRoll(response.data.roll);
+            setCurrentUser(response); //set user access
+            setUserRoll(response.roll);
             sessionStorage.setItem(userName, `${response.token}`);
             setTimeout(() => {
               setOpen(false);
               setJoin(true);
               setLoading(false);
-              setLogIn(false);
+              setLogIn(true);
             }, 500);
           }
         })
@@ -177,6 +197,7 @@ export default function SignUpModal() {
   }
 
   //Log Out button
+  //This also clears user statuses and inputs
   function logOut() {
     setLogIn(true);
     setUserRoll("none");

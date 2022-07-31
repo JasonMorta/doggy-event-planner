@@ -3,27 +3,23 @@ import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import './drawerButton.css'
 import { useEffect, useContext, useState } from 'react';
 import { sharedState } from '../../App';
 import trash from '../../static/images/trash.png'
-import CircularStatic from '../spinner/CircularLoader';
-
 
 export default function AllUsersDrawer() {
 
   let appState = useContext(sharedState)
 
-  let [loggedIn, setLoggedIn, dogOwners, setDogOwners, allEvents, setAllEvents, comments, setComments, editButton, setEditButton, eventId, setEventId, thisEvent, setThisEvent,update, setUpdate, thisComment, setThisComment, commentId, setCommentId, currentUser, setCurrentUser ] = appState
+  let [, , dogOwners, setDogOwners, , , , , , , , , , ,, , , , , , ,  ] = appState
 
-  //Drawer satet
+  //Drawer state
   const [state, setState] = useState({
     right: false,
   });
@@ -89,7 +85,6 @@ export default function AllUsersDrawer() {
          alert(error)
         });
   }
-
 
 
   const list = (anchor) => (

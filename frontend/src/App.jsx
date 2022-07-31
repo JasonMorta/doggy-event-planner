@@ -3,7 +3,6 @@ import './App.css';
 import { createContext } from 'react';
 import { useState } from 'react';
 import Dash from './pages/Dash';
-import Shape from './components/spinner/shadpe-devider/Shape';
 import NavBar from './components/navigation/NavBar';
 import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import About from './pages/About';
