@@ -148,15 +148,4 @@ exports.decrementLikes =  async (req, res) => {
       }              
 }
 
-//Return event by id events
-exports.fetchOne =  async (req, res) => {
-      try{
-            //return all event documents
-            const event = await model.findById({_id: req.body.id});
-            res.send(event) 
-            console.log("Found One")
-      } catch(err){
-            console.log(err)
-            res.send(err)
-      }
-}
+

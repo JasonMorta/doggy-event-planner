@@ -25,7 +25,6 @@ require('./routes/events/updateEvent')(app);
 require('./routes/events/incLikes')(app);
 require('./routes/events/decLikes')(app);
 require('./routes/events/deleteEvent')(app);
-require('./routes/events/OneEvent')(app);
 
 //comments
 require('./routes/comments/addComment')(app);
@@ -37,14 +36,6 @@ require('./routes/comments/findOneComment')(app);
 
 
 
-/* For Heroku Deployment */
-if (process.env.NODE_ENV === 'production') {
-   app.use(express.static(path.join(__dirname, 'frontend/build')));
-   app.get('*', (req, res) => {
-      res.sendFile(path.resolve(__dirname,
-         'frontend', 'build', 'index.html'));
-   });
-}
 
 //store API-key in
 const uri = process.env.DB_API_KEY;
@@ -71,3 +62,14 @@ const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
    console.log(`Server is listening on port ${PORT}`);
 });
+
+
+
+/* For Heroku Deployment */
+if (process.env.NODE_ENV === 'production') {
+   app.use(express.static(path.join(__dirname, 'frontend/build')));
+   app.get('*', (req, res) => {
+      res.sendFile(path.resolve(__dirname,
+         'frontend', 'build', 'index.html'));
+   });
+}
