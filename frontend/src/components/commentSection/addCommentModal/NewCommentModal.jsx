@@ -111,7 +111,7 @@ export default function NewCommentModal() {
   } //end of request function
 
   return (
-    <div className="addCB">
+    <section className="addCB">
       <ReusableButton
         variant="contained"
         color="error"
@@ -156,6 +156,6 @@ export default function NewCommentModal() {
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </section>
   );
 }
