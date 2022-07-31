@@ -57,8 +57,9 @@ exports.addComment = async (req, res, next) => {
  }  
 }
 
-
 //REPLY to a comment
+//To add a reply message to comment, we will find the selected comment by
+//it's id number, then push the new reply message into the replies array
 exports.replies =  async (req, res) => {
       
       try {
@@ -105,25 +106,3 @@ exports.removeComment =  async (req, res) => {
  }              
 }
 
-
-//UPDATE one comment in db
-exports.updateComment =  async (req, res) => {
-      
- try {
-       //Find event by id
-       await model.findOneAndUpdate(
-        {_id: req.body.id},
-        {$set: {comment: req.body.comment}},
-       { new: true })
-       
-       //return all comment documents
-       const events = await model.find({}).sort({ "created" : -1});
-       console.log("Comment Updated")
-       res.send(events) 
- 
-
- } catch(err) {
-       console.log(err)
-       res.send(err)
- }              
-}

@@ -26,11 +26,10 @@ export default function CommentBlock() {
   let state = useContext(sharedState);
 
 
-  let [loggedIn, setLoggedIn, dogOwners, setDogOwners, allEvents, setAllEvents, comments, setComments, editButton, setEditButton, eventId, setEventId, thisEvent, setThisEvent,update, setUpdate, thisComment, setThisComment, commentId, setCommentId, currentUser, setCurrentUser,userRoll, setUserRoll ] = state
+  let [loggedIn, setLoggedIn, dogOwners, setDogOwners, allEvents, setAllEvents, comments, setComments, editButton, setEditButton, eventId, setEventId, thisEvent, setThisEvent,update, setUpdate, thisComment, setThisComment, commentId, setCommentId, currentUser, setCurrentUser,userRoll, setUserRoll,limit, setLimit, thisReply, setThisReply, loading, setLoading ] = state
 
-  const [open, setOpen] = React.useState(false);
   const [deleted, setDeleted] = React.useState(false);
-  const [thisReply, setThisReply] = React.useState('')
+  const [inputMessage, setInputMessage]= useState('')
 
   //return all comment from db
   useEffect(() => {
@@ -89,42 +88,7 @@ export default function CommentBlock() {
   }
 
 
- 
-  //handle the reply input changes
-  function handleInput(e){
-    console.log(e.target.value);
-    setThisReply(e.target.value)
 
-  }
-
-  //Reply to comments
-   async function handleReplySubmit(e){
-      
-    await fetch("/replies", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        id: commentId,
-        user: currentUser.name,
-        comment: thisReply,
-      }),
-      //handle errors
-    })
-      .then((res) => res.json())
-      .then(( response) => {
-      setComments(response);
-      setThisReply('✔')
-      })
-       .catch((error) => {
-        console.log(error);
-      setThisReply('⁉')
-      });
-
-      setTimeout(() => {
-        setThisReply(' ')
-      }, 2000);
-    
-  }
 
 
   return (
@@ -142,7 +106,7 @@ export default function CommentBlock() {
         sx={{ width: "100%", maxWidth: "90%", bgcolor: "background.paper" }}
         className="commentsList"
       >
-        {comments.map((user) => (
+        {comments.map((comment) => (
           <>
             <ListItem alignItems="flex-start" key={nanoid()} sx={{flexDirection: 'column'}}>
               <ListItemText
@@ -159,29 +123,24 @@ export default function CommentBlock() {
                     </Typography>
                 
                    <div  style={{backgroundColor: 'rgb(242 225 230)', padding: "10px" }}>
-                   <b>{`${user.user}`}</b>
+                   <b>{`${comment.user}`}</b>
 
-
+                  {/* === Comment reply modal component === */}
+                    <RepliesModal  data={comment._id} />
+                
+                    
                   
-                      <RepliesModal
-                        getUserId={()=> setCommentId(user._id)}
-                        handleReplySubmit={handleReplySubmit}
-                        thisReply={thisReply}
-                        handleReplyInput={handleInput}/>
-                   
 
-                   
-
-                      {` — ${user.comment}`}
+                      {` — ${comment.comment}`}
                    </div>
-                    <i className='comment-date'> {` on ${user.created.slice(0, 10)}`}</i>
+                    <i className='comment-date'> {` on ${comment.created.slice(0, 10)}`}</i>
                     
                   </React.Fragment>
                   
                 }
               />
-              {/* replies on comment */}
-                {user.replies.map(reply => (
+              {/* Comment's replies array */}
+                {comment.replies.map(reply => (
                   <ListItemText 
                   key={nanoid()}
                   className='reply-text'
@@ -216,19 +175,19 @@ export default function CommentBlock() {
                     src={trash}
                     onClick={deleteComment}
                     alt="delete-icon"
-                    data-del={user._id}
-                    data-name={user.user}
+                    data-del={comment._id}
+                    data-name={comment.user}
                   />
                 </div>
-              ) : currentUser.name === user.user ? (
+              ) : currentUser.name === comment.user ? (
                 userRoll === "member" ? (
                   <div className="comment-icons">
                     <img
                       src={trash}
                       onClick={deleteComment}
                       alt="delete-icon"
-                      data-del={user._id}
-                      data-name={user.user}
+                      data-del={comment._id}
+                      data-name={comment.user}
                     />
                   </div>
                 ) : (

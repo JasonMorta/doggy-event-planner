@@ -20,7 +20,7 @@ function App() {
 
   //create a state for every value that needs to be changed
   //these values can be changed from the parent or any child component
-  const [currentUser, setCurrentUser] = useState('');
+  const [currentUser, setCurrentUser] = useState('visitor');
   const [userRoll, setUserRoll] = useState('visitor');
   const [loggedIn, setLoggedIn] = useState(false);
   const [dogOwners, setDogOwners] = useState([]);
@@ -36,11 +36,13 @@ function App() {
   const [comments, setComments] = useState([]);
   const [commentId, setCommentId] = useState('');
   const[limit, setLimit]=useState(false);
+  const [thisReply, setThisReply] = useState('')
+  const [loading, setLoading] = useState(false)
 
 
   return (
     //To pass and sharedState with all components, we use the .Provider element and pass data through value={[stateValues]}
-    <sharedState.Provider value={[loggedIn, setLoggedIn, dogOwners, setDogOwners, allEvents, setAllEvents, comments, setComments, editButton, setEditButton, eventId, setEventId, thisEvent, setThisEvent,update, setUpdate, thisComment, setThisComment, commentId, setCommentId, currentUser, setCurrentUser,userRoll, setUserRoll,limit, setLimit ]}>
+    <sharedState.Provider value={[loggedIn, setLoggedIn, dogOwners, setDogOwners, allEvents, setAllEvents, comments, setComments, editButton, setEditButton, eventId, setEventId, thisEvent, setThisEvent,update, setUpdate, thisComment, setThisComment, commentId, setCommentId, currentUser, setCurrentUser,userRoll, setUserRoll,limit, setLimit, thisReply, setThisReply, loading, setLoading ]}>
     <div className="App">
       
     

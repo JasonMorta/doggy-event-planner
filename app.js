@@ -31,11 +31,20 @@ require('./routes/events/OneEvent')(app);
 require('./routes/comments/addComment')(app);
 require('./routes/comments/replies')(app);
 require('./routes/comments/removeComment')(app);
-require('./routes/comments/updateComment')(app);
 require('./routes/comments/findAllComments')(app);
 require('./routes/comments/findOneComment')(app);
 
 
+
+
+/* For Heroku Deployment */
+if (process.env.NODE_ENV === 'production') {
+   app.use(express.static(path.join(__dirname, 'frontend/build')));
+   app.get('*', (req, res) => {
+      res.sendFile(path.resolve(__dirname,
+         'frontend', 'build', 'index.html'));
+   });
+}
 
 //store API-key in
 const uri = process.env.DB_API_KEY;
