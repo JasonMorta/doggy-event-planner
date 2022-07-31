@@ -123,7 +123,8 @@ export default function CommentBlock() {
                    <b>{`${comment.user}`}</b>
 
                   {/* === Comment reply modal component === */}
-                    <RepliesModal  data={comment._id} />
+                    { userRoll === "admin" ? <RepliesModal  data={comment._id} /> :
+                      userRoll === "member" ? <RepliesModal  data={comment._id} /> : <></>}
                 
                     
                   

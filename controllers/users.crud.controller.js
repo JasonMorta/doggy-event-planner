@@ -52,15 +52,21 @@ exports.logIn = async (req, res, next) => {
 }
 
 //ADD(SIGN-UP) a dogOwner document to db
+//send token with response
 exports.new = async (req, res) => {
+
+
+      //Create the JWT token      
+      payload = { 'name': req.body.name}
+      const token = jwt.sign(JSON.stringify(payload), process.env.SECRET_KEY, {
+            algorithm: 'HS256'
+      })
 
       //First check is userName exists
       let name = req.body.name
       let password = req.body.password
 
-      //handle runtime errors
       try {
-
 
             const user = await model.findOne({
                   name: name
@@ -82,9 +88,10 @@ exports.new = async (req, res) => {
 
                   //find return this document
                   const user = await model.findOne({
-                        name: name
+                        name: req.body.name,
+                        password: req.body.password
                   });
-                  res.send(user)
+                  res.send({'data': user, 'token': token})
 
                   //res.send(dogOwner); //send the same data back 
                   console.log("New user Added");

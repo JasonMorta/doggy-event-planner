@@ -53,6 +53,7 @@ export default function SignUpModal() {
 
   // clear fields before opening
   const handleClickOpen = () => {
+    console.log(logIn)
     setUserName("");
     setPassword("");
     setLogIn(false);
@@ -76,53 +77,14 @@ export default function SignUpModal() {
 
   function handleUserName(e) {
     setUserName(e.target.value);
+    console.log(userName)
   }
 
   function handlePassword(e) {
     setPassword(e.target.value);
   }
 
-  //use must enter a name and password
-  //LOG-IN  user
-  async function handleLogIn() {
-    setLoading(true);
-    setTimeout(() => {
-      setClearField(false);
-    }, 500);
-    await fetch("/logIn", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: userName,
-        password: password,
-      }),
-    })
-      .then((res) => res.json())
-      .then((response) => {
-        if (response === null) {
-          alert("User not found");
-          //setOpen(false);
-          setLoading(false);
-          setLogIn(false);
-        } else {
-          setCurrentUser(response.data); //set user access
-          setUserRoll(response.data.roll);
-          sessionStorage.setItem(userName, `${response.token}`);
-          setTimeout(() => {
-            setOpen(false);
-            setJoin(true);
-            setLoading(false);
-            setLogIn(true);
-          }, 500);
-        }
-      })
-      //Handle errors here
-      .catch((error) => {
-        console.log(error);
-      });
-  } // end of function
+
 
   /* 
   ==============================================================
@@ -136,12 +98,15 @@ export default function SignUpModal() {
   //this token will be stored in session storage,
   //The token will be use to verify the user when
   //interacting with any buttons
+  //This JOIN button text will change to LOG-IN if user selected log-in
   async function handleJoin(e) {
+    console.log(logIn)
+
     if (logIn) {
-      //log in user
+      //If user clicked the log-in button, open the log in modal.
       handleLogIn();
     } else {
-      //Create new user
+      //open join in modal. For creating a new account.
       setTimeout(() => {
         setClearField(false);
       }, 500);
@@ -160,8 +125,8 @@ export default function SignUpModal() {
           if (response === "Username taken") {
             alert("Name taken");
           } else {
-            setCurrentUser(response); //set user access
-            setUserRoll(response.roll);
+            setCurrentUser(response.data); //set user access
+            setUserRoll(response.data.roll);
             sessionStorage.setItem(userName, `${response.token}`);
             setTimeout(() => {
               setOpen(false);
@@ -178,6 +143,49 @@ export default function SignUpModal() {
     }
   } // end of function
 
+    //use must enter a name and password
+  //LOG-IN  user
+  async function handleLogIn() {
+    setLoading(true);
+    setTimeout(() => {
+      setClearField(false);
+    }, 500);
+    await fetch("/logIn", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: userName,
+        password: password,
+      }),
+    })
+      .then((res) => res.json())
+      .then((response) => {
+        console.log(response)
+        if (response.data === null) {
+          alert("User not found");
+          setLoading(false);
+          //setLogIn(false);
+        } else {
+         
+          setCurrentUser(response.data); //set user access
+          setUserRoll(response.data.roll);
+          sessionStorage.setItem(userName, `${response.token}`);
+          setTimeout(() => {
+            setOpen(false);
+            setJoin(true);
+            setLoading(false);
+            setLogIn(true);
+          }, 500);
+        }
+      })
+      //Handle errors here
+      .catch((error) => {
+        console.log(error);
+      });
+  } // end of function
+
   /* 
   ===========================================================
   * Handle the log-in and log-out
@@ -189,6 +197,7 @@ export default function SignUpModal() {
   ===========================================================
   */
   function logInButton(e) {
+    console.log(logIn)
     setLogIn(false);
     setUserName("");
     setPassword("");
@@ -199,6 +208,7 @@ export default function SignUpModal() {
   //Log Out button
   //This also clears user statuses and inputs
   function logOut() {
+    console.log(logIn)
     setLogIn(true);
     setUserRoll("none");
     setUserName("");
@@ -213,22 +223,23 @@ export default function SignUpModal() {
   return (
     <div className="signUp-container">
       <div className="logIn-btn">
+
         <ReusableButton
           variant="contained"
           color="error"
           disabled={logIn ? true : false}
           onClick={handleClickOpen}
-        >
-          Join
+        >Join
         </ReusableButton>
 
+        {/* If log-in state is true, switch the function of this button */}
         <ReusableButton
           variant="contained"
           color="success"
-          onClick={logIn ? logInButton : logOut}
-        >
-          {logIn ? "Log out" : "Log in"}
+          onClick={logIn ? logInButton : logOut}>
+          {logIn ? "LOG OUT" : "LOG IN"}
         </ReusableButton>
+
       </div>
       <Dialog open={open} onClose={handleClose}>
         <div className="dialog-container">
