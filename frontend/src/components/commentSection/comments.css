@@ -98,7 +98,9 @@
     transform: scale(1.1) translate(0, -50%);
 }
 
-@media only screen and (min-width: 37.5rem) {
+@media (max-width: 37.5rem) {
 
- 
+    .hi-dog {
+        display: none;
+    }
 }

@@ -6,10 +6,11 @@
 
 .dashboard-container {
   max-width: 800px;
-  margin: 0 20px;
-  min-width: 320px;
+  /* margin: 0 20px; */
+  /* min-width: 334px; */
   position: relative;
   margin-top: 40px;
+
 }
 
 .admin-controllers {

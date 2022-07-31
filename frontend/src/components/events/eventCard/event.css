@@ -3,12 +3,12 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  align-items: stretch;
   max-width: 600px;
   min-width: 500px;
   margin: auto;
   font-size: large;
   color: black;
+  align-items: center;
 }
 
 
