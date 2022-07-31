@@ -121,7 +121,7 @@ export default function CommentBlock() {
           <></>
         )}
         <List
-          sx={{ width: "100%", maxWidth: "90%", bgcolor: "background.paper" }}
+          sx={{ width: "100%", bgcolor: "background.paper" }}
           className="commentsList"
         >
           {comments.map((comment) => (

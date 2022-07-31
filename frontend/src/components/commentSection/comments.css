@@ -34,7 +34,7 @@
     min-height: 11.875rem;
     margin: 1.25rem 0rem;
     border: 0.625rem solid rgb(181 187 253); 
-    border-radius: 17% 16% 9% 98% / 66% 22% 106% 12%;
+    border-radius: 10% 90% 7% 86% / 86% 1% 86% 0%;
     overflow-y: scroll;/* Add the ability to scroll */
 }
 
