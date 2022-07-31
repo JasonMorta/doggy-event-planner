@@ -108,68 +108,31 @@ export default function CommentBlock() {
   }
 
   return (
-    <div className="commentBlock">
-      <img src={hiDog} alt="dag waving" className="hi-dog" />
+    <>
       <h3>Comments</h3>
-      {userRoll === "member" ? (
-        <NewCommentModal />
-      ) : userRoll === "admin" ? (
-        <NewCommentModal />
-      ) : (
-        <></>
-      )}
-      <List
-        sx={{ width: "100%", maxWidth: "90%", bgcolor: "background.paper" }}
-        className="commentsList"
-      >
-        {comments.map((comment) => (
-          <>
-            <ListItem
-              alignItems="flex-start"
-              key={nanoid()}
-              sx={{ flexDirection: "column" }}
-            >
-              <ListItemText
-                className="comment-text"
-                primary=""
-                secondary={
-                  <React.Fragment>
-                    <Typography
-                      sx={{ display: "inline" }}
-                      component="span"
-                      variant="body2"
-                      color="text.primary"
-                    ></Typography>
-
-                    <div
-                      style={{
-                        backgroundColor: "rgb(242 225 230)",
-                        padding: "10px",
-                      }}
-                    >
-                      <b>{`${comment.user}`}</b>
-
-                      {/* === Comment reply modal component === */}
-                      <RepliesModal data={comment._id} />
-
-                      {` — ${comment.comment}`}
-                    </div>
-                    <i className="comment-date">
-                      {" "}
-                      {` on ${comment.created.slice(0, 10)}`}
-                    </i>
-                  </React.Fragment>
-                }
-              />
-              {/* Comment's replies array */}
-              {comment.replies.map((reply) => (
+      <div className="commentBlock">
+        <img  src={hiDog} alt="dag waving" className="hi-dog" />
+        
+        {userRoll === "member" ? (
+          <NewCommentModal />
+        ) : userRoll === "admin" ? (
+          <NewCommentModal />
+        ) : (
+          <></>
+        )}
+        <List
+          sx={{ width: "100%", maxWidth: "90%", bgcolor: "background.paper" }}
+          className="commentsList"
+        >
+          {comments.map((comment) => (
+            <>
+              <ListItem
+                alignItems="flex-start"
+                key={nanoid()}
+                sx={{ flexDirection: "column" }}
+              >
                 <ListItemText
-                  key={nanoid()}
-                  className="reply-text"
-                  sx={{
-                    borderRadius: "50px",
-                    marginLeft: "auto",
-                  }}
+                  className="comment-text"
                   primary=""
                   secondary={
                     <React.Fragment>
@@ -179,33 +142,61 @@ export default function CommentBlock() {
                         variant="body2"
                         color="text.primary"
                       ></Typography>
-                      {`${reply.comment}`} <b>{`—  ${reply.user}`}</b>
+  
+                      <div
+                        style={{
+                          backgroundColor: "rgb(242 225 230)",
+                          padding: "10px",
+                        }}
+                      >
+                        <b>{`${comment.user}`}</b>
+  
+                        {/* === Comment reply modal component === */}
+                        <RepliesModal data={comment._id} />
+  
+                        {` — ${comment.comment}`}
+                      </div>
                       <i className="comment-date">
                         {" "}
-                        {` on ${reply.created.slice(0, 10)}`}
+                        {` on ${comment.created.slice(0, 10)}`}
                       </i>
                     </React.Fragment>
                   }
                 />
-              ))}
-
-              {/*
-               *** members can only  delete their own comment
-               *** Admin can delete any comment
-               */}
-              {userRoll === "admin" ? (
-                <div className="comment-icons" key={nanoid()}>
-                  <img
-                    src={trash}
-                    onClick={deleteComment}
-                    alt="delete-icon"
-                    data-del={comment._id}
-                    data-name={comment.user}
+                {/* Comment's replies array */}
+                {comment.replies.map((reply) => (
+                  <ListItemText
+                    key={nanoid()}
+                    className="reply-text"
+                    sx={{
+                      borderRadius: "50px",
+                      marginLeft: "auto",
+                    }}
+                    primary=""
+                    secondary={
+                      <React.Fragment>
+                        <Typography
+                          sx={{ display: "inline" }}
+                          component="span"
+                          variant="body2"
+                          color="text.primary"
+                        ></Typography>
+                        {`${reply.comment}`} <b>{`—  ${reply.user}`}</b>
+                        <i className="comment-date">
+                          {" "}
+                          {` on ${reply.created.slice(0, 10)}`}
+                        </i>
+                      </React.Fragment>
+                    }
                   />
-                </div>
-              ) : currentUser.name === comment.user ? (
-                userRoll === "member" ? (
-                  <div className="comment-icons">
+                ))}
+  
+                {/*
+                 *** members can only  delete their own comment
+                 *** Admin can delete any comment
+                 */}
+                {userRoll === "admin" ? (
+                  <div className="comment-icons" key={nanoid()}>
                     <img
                       src={trash}
                       onClick={deleteComment}
@@ -214,18 +205,30 @@ export default function CommentBlock() {
                       data-name={comment.user}
                     />
                   </div>
+                ) : currentUser.name === comment.user ? (
+                  userRoll === "member" ? (
+                    <div className="comment-icons">
+                      <img
+                        src={trash}
+                        onClick={deleteComment}
+                        alt="delete-icon"
+                        data-del={comment._id}
+                        data-name={comment.user}
+                      />
+                    </div>
+                  ) : (
+                    <></>
+                  )
                 ) : (
                   <></>
-                )
-              ) : (
-                <></>
-              )}
-            </ListItem>
-
-            <Divider variant="inset" component="li" />
-          </>
-        ))}
-      </List>
-    </div>
+                )}
+              </ListItem>
+  
+              <Divider variant="inset" component="li" />
+            </>
+          ))}
+        </List>
+      </div>
+    </>
   );
 }
