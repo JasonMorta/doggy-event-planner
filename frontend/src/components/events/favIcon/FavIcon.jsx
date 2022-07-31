@@ -29,7 +29,6 @@ export default function FavIcon(props) {
       })
         .then((response) => response.json())
         .then((res) => {
-          console.log(res);
           setAllEvents(res);
         })
         .catch((error) => {
