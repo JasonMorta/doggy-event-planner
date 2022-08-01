@@ -26,6 +26,7 @@ require('./routes/events/updateEvent')(app);
 require('./routes/events/incLikes')(app);
 require('./routes/events/decLikes')(app);
 require('./routes/events/deleteEvent')(app);
+require('./routes/events/OneEvent')(app);
 
 //comments
 require('./routes/comments/addComment')(app);
