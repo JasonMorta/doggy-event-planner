@@ -37,7 +37,7 @@
     border-radius: 13% 85% 15% 85% / 70% 0% 92% 30%;
     border-top-right-radius: 38px;
     background: #e0e0e0;
-    box-shadow: -7px -5px 9px #bebebe, 20px 20px 60px #ffffff, inset 0px 0px 10px grey;
+    box-shadow: -1px -1px 8px #bebebe, 20px 20px 60px #ffffff, inset 0px 0px 10px grey;
     display: flex;
     flex-direction: column;
     border: 18px solid #989dd5;
