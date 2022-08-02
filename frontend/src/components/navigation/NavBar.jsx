@@ -15,12 +15,13 @@ export default function NavBar() {
 
   const navStyle = {
     backgroundColor: "#efffafd6",
+    
   };
 
   const btnStyle = {
-    color: "#8c92d7",
-    "&:selected": {
-      backgroundColor: "#efffafd6",
+    color: "#767cb8",
+    '&:active': {
+      color: "#efffafd6",
     },
   };
 

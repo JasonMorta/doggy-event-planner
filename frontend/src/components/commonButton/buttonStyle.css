@@ -1,5 +1,5 @@
 .com-btn {
-        
+        box-shadow: -4px -4px 8px -3px #bebebea1, 20px 20px 60px #ffffff !important;
         z-index: 1;
 	-webkit-animation: bounce-top 0.9s both;
 	        animation: bounce-top 0.9s both;

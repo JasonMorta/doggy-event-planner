@@ -119,7 +119,7 @@ export default function CommentBlock() {
                     >
                     </Typography>
                 
-                   <div  style={{backgroundColor: 'rgb(242 225 230)', padding: "10px" }}>
+                   <div  style={{backgroundColor: 'rgb(242 225 230)', padding: '10px', borderRadius: '5px' }}>
                    <b>{`${comment.user}`}</b>
 
                   {/* === Comment reply modal component === */}
@@ -143,7 +143,7 @@ export default function CommentBlock() {
                   key={nanoid()}
                   className='reply-text'
                   sx={{     
-                    borderRadius: '50px',
+                    borderRadius: '5px',
                     marginLeft: 'auto'}}
                   primary=""
                   secondary={

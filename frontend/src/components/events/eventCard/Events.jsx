@@ -8,6 +8,7 @@ import EditEventModal from "../editEvent/EditEventModal";
 import FavIcon from "../favIcon/FavIcon";
 import dogsArray from "./DogImageArray";
 import Placeholder from "./Placeholder";
+import './cardAnimation.css'
 
 export default function Events() {
   //shared state
@@ -74,11 +75,16 @@ export default function Events() {
       <h1>Weekly Events</h1>
       <>
         {allEvents.length < 1 ? (
-          <Placeholder />
+          <div className="skeletons">
+            <Placeholder />
+            <Placeholder />
+            <Placeholder />
+            <Placeholder />
+          </div>
         ) : (
           allEvents.map((event, index) => (
             <div
-              className="event-card"
+              className= {`event-card ${index % 2 === 0 ? " slide-in-left": " slide-in-right"}`}
               style={{
                 backgroundImage: `url(${dogsArray[index].src})`,
               }}
@@ -92,8 +98,8 @@ export default function Events() {
                 className="main-content"
                 style={
                   index % 2 === 0
-                    ? { marginLeft: "32%" }
-                    : { marginRight: "32%" }
+                    ? { marginLeft: "32%", alignItems: "flex-end" }
+                    : { marginRight: "32%", alignItems: "flex-start" }
                 }
               >
                 <div className="heading-container">
