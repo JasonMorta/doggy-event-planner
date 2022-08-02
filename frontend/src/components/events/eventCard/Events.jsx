@@ -71,6 +71,7 @@ export default function Events() {
 
   return (
     <div className="event-main-container">
+      <h1>Weekly Events</h1>
       <>
         {allEvents.length < 1 ? (
           <Placeholder />
@@ -87,6 +88,7 @@ export default function Events() {
                 <h2>{event.date}</h2>
               </div>
               <div
+              // change the margin in every second card
                 className="main-content"
                 style={
                   index % 2 === 0

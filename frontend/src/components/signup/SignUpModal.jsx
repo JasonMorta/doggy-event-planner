@@ -12,14 +12,15 @@ import CircularStatic from "../spinner/CircularLoader";
 import TextLoader from "../spinner/TextLoader";
 import { sharedState } from "../../App";
 import ReusableButton from "../commonButton/ReusableButton";
+import PasswordInput from "../inputFields/PasswordInput";
 
 //This component will handle both the logIn and sign-up
 export default function SignUpModal() {
   let shareState = useContext(sharedState);
 
   let [
-    ,
-    ,
+    loggedIn,
+    setLoggedIn,
     ,
     ,
     ,
@@ -49,14 +50,14 @@ export default function SignUpModal() {
   const [join, setJoin] = useState(false);
   const [loading, setLoading] = useState(false);
   const [clearField, setClearField] = useState(false);
-  const [logIn, setLogIn] = useState(false);
+
 
   // clear fields before opening
   const handleClickOpen = () => {
-    console.log(logIn)
+   
     setUserName("");
     setPassword("");
-    setLogIn(false);
+    setLoggedIn(false);
     setOpen(true);
     setClearField(true);
     setTimeout(() => {
@@ -64,10 +65,11 @@ export default function SignUpModal() {
     }, 300);
   };
 
+  //When Modal opens
   const handleClose = () => {
     setOpen(false); //close modal
     setClearField(false); //clear input fields
-    setLogIn(false);
+    setLoggedIn(false);
   };
 
   //Handle user info
@@ -75,11 +77,12 @@ export default function SignUpModal() {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
 
+  //handle input username
   function handleUserName(e) {
     setUserName(e.target.value);
-    console.log(userName)
   }
 
+  //handle input password
   function handlePassword(e) {
     setPassword(e.target.value);
   }
@@ -100,9 +103,9 @@ export default function SignUpModal() {
   //interacting with any buttons
   //This JOIN button text will change to LOG-IN if user selected log-in
   async function handleJoin(e) {
-    console.log(logIn)
+ 
 
-    if (logIn) {
+    if (loggedIn) {
       //If user clicked the log-in button, open the log in modal.
       handleLogIn();
     } else {
@@ -132,7 +135,7 @@ export default function SignUpModal() {
               setOpen(false);
               setJoin(true);
               setLoading(false);
-              setLogIn(true);
+              setLoggedIn(true);
             }, 500);
           }
         })
@@ -166,7 +169,7 @@ export default function SignUpModal() {
         if (response.data === null) {
           alert("User not found");
           setLoading(false);
-          //setLogIn(false);
+         
         } else {
          
           setCurrentUser(response.data); //set user access
@@ -176,7 +179,7 @@ export default function SignUpModal() {
             setOpen(false);
             setJoin(true);
             setLoading(false);
-            setLogIn(true);
+            setLoggedIn(true);
           }, 500);
         }
       })
@@ -197,8 +200,7 @@ export default function SignUpModal() {
   ===========================================================
   */
   function logInButton(e) {
-    console.log(logIn)
-    setLogIn(false);
+    setLoggedIn(false);
     setUserName("");
     setPassword("");
     setCurrentUser("");
@@ -208,8 +210,7 @@ export default function SignUpModal() {
   //Log Out button
   //This also clears user statuses and inputs
   function logOut() {
-    console.log(logIn)
-    setLogIn(true);
+    setLoggedIn(true);
     setUserRoll("none");
     setUserName("");
     setPassword("");
@@ -227,7 +228,7 @@ export default function SignUpModal() {
         <ReusableButton
           variant="contained"
           color="error"
-          disabled={logIn ? true : false}
+          disabled={loggedIn ? true : false}
           onClick={handleClickOpen}
         >Join
         </ReusableButton>
@@ -236,32 +237,35 @@ export default function SignUpModal() {
         <ReusableButton
           variant="contained"
           color="success"
-          onClick={logIn ? logInButton : logOut}>
-          {logIn ? "LOG OUT" : "LOG IN"}
+          onClick={loggedIn ? logInButton : logOut}>
+          {loggedIn ? "LOG OUT" : "LOG IN"}
         </ReusableButton>
 
       </div>
       <Dialog open={open} onClose={handleClose}>
         <div className="dialog-container">
-          <DialogTitle>{logIn ? "Log in" : "Join"}</DialogTitle>
+          <DialogTitle>{loggedIn ? "Log in" : "Join"}</DialogTitle>
           <DialogContent className="DialogContent">
             <DialogContentText>
               Join our community today and find more friend for your dog. <br />
               ▸ As a new member you can also share your thoughts in the comment
               section.
             </DialogContentText>
+            {/* load in empty textfield to clear the current ones */}
             {clearField ? (
               <TextLoader />
             ) : (
               <TextField
+                autoComplete="off"
                 autoFocus
                 margin="dense"
                 id="name"
+                className="name-input"
                 label="Dog name"
                 type="user name"
                 required
                 fullWidth
-                variant="standard"
+                variant="filled"
                 onInput={handleUserName}
                 defaultValue={userName}
               />
@@ -269,16 +273,10 @@ export default function SignUpModal() {
             {clearField ? (
               <TextLoader />
             ) : (
-              <TextField
-                margin="dense"
-                id="password"
-                label="password"
-                type="email"
-                fullWidth
-                required
-                variant="standard"
-                onInput={handlePassword}
-                defaultValue={password}
+              <PasswordInput
+              variant='filled'
+              value={password}
+              onChange={handlePassword}
               />
             )}
           </DialogContent>
@@ -288,7 +286,7 @@ export default function SignUpModal() {
             {loading ? (
               <CircularStatic />
             ) : (
-              <Button onClick={handleJoin}>{logIn ? "Log in" : "Join"}</Button>
+              <Button onClick={handleJoin}>{loggedIn ? "Log in" : "Join"}</Button>
             )}
           </DialogActions>
         </div>

@@ -129,7 +129,7 @@ export default function AddEventModal(props) {
         variant="contained"
         color="success"
         listitem={props.event}
-        className="addEvent-btn"
+       style={{width: "50px"}}
         onClick={handleClickOpen}
       >
         Edit

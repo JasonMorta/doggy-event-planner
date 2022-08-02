@@ -8,7 +8,6 @@ export default function ReusableButton(props) {
     backgroundColor: "#efffafd6",
     color: "gray",
     margin: "0 5px",
-    minWidth: "100px",
     borderRadius: "20px",
     border: "0px solid gray",
     boxShadow: "none",

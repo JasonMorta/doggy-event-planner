@@ -4,6 +4,8 @@
  justify-content: space-between;
  align-items: center;
  margin: 20px;
+ position: relative;
+ z-index: 1;
 }
 
 .signUp-container p {
@@ -26,4 +28,22 @@
 
 .dialog-main{
  border-radius: 20px;
+}
+
+.name-input{
+ background-color: rgb(30 30 30 / 49%)
+}
+
+
+#name-label {
+ color: rgb(134, 152, 212);
+}
+
+.MuiFilledInput-root::after{
+ border-bottom-color: rgb(255, 255, 255) !important;
+
+}
+
+input:-internal-autofill-selected {
+ background-color: red;
 }

@@ -1,4 +1,6 @@
 .com-btn {
+        
+        z-index: 1;
 	-webkit-animation: bounce-top 0.9s both;
 	        animation: bounce-top 0.9s both;
 }

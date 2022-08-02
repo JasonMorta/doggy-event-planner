@@ -196,7 +196,7 @@ export default function CommentBlock() {
               )}
             </ListItem>
 
-            <Divider variant="inset" component="li" />
+            <Divider variant="inset" component="li" sx={{marginLeft: "0px"}} />
           </>
         ))}
       </List>

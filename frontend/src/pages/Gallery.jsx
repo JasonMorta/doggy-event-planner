@@ -24,6 +24,10 @@ export default function Gallery() {
           width: 500,
           height: 650,
           transform: 'translateZ(0)',
+          borderRadius:' 7px',
+          border: '5px solid #fefefe',
+          background: '#e0e0e0',
+          boxShadow: '-20px 20px 60px #bebebe , 20px -20px 60px #ffffff',
         }}
         rowHeight={200}
         gap={1}
