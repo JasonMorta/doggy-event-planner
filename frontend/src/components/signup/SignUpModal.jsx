@@ -282,11 +282,11 @@ export default function SignUpModal() {
           </DialogContent>
 
           <DialogActions>
-            <Button onClick={handleClose}>not now</Button>
+            <Button variant="outlined" color="secondary" onClick={handleClose}>not now</Button>
             {loading ? (
               <CircularStatic />
             ) : (
-              <Button onClick={handleJoin}>{loggedIn ? "Log in" : "Join"}</Button>
+              <Button className="log-in-inner" variant="outlined" color="secondary" onClick={handleJoin}>{loggedIn ? "Log in" : "Join"}</Button>
             )}
           </DialogActions>
         </div>

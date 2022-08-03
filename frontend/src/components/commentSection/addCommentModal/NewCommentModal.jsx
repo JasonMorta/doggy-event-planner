@@ -12,6 +12,7 @@ import { useContext } from "react";
 import { sharedState } from "../../../App";
 import TextLoader from "../../spinner/TextLoader";
 import ReusableButton from "../../commonButton/ReusableButton";
+import CircularLoader from "../../spinner/CircularLoader";
 
 //Handle the Modal functionality
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -81,7 +82,7 @@ export default function NewCommentModal() {
   //Send token with request for validation.
   //if the token is good, server will respond with new data
   async function addComment(e) {
-    setOpen(false);
+    setLoading(true);
     //Add new user to db
     await fetch("/addComment", {
       method: "POST",
@@ -101,13 +102,18 @@ export default function NewCommentModal() {
           alert("Authentication failed");
         } else {
           setComments(response);
+          setThisComment("Comment Added ✔")
+          setTimeout(() => {
+            setOpen(false);
+            setThisComment("");
+          }, 100);
         }
       })
       .catch((error) => {
         console.log(error);
       });
     setLoading(false);
-    setThisComment("");
+    
   } //end of request function
 
   return (
@@ -151,9 +157,11 @@ export default function NewCommentModal() {
           </DialogContent>
         )}
         <DialogActions>
+          {loading ? <CircularLoader />
+          : 
           <Button variant="contained" onClick={addComment}>
             Add
-          </Button>
+          </Button>}
         </DialogActions>
       </Dialog>
     </section>

@@ -14,6 +14,8 @@ import NewCommentModal from './addCommentModal/NewCommentModal';
 import RepliesModal from './addCommentModal/RepliesModal';
 import { useState } from 'react';
 import { nanoid } from 'nanoid'
+import Loader from '../spinner/Loader';
+import CircularLoader from '../spinner/CircularLoader';
 
 
 
@@ -23,10 +25,10 @@ export default function CommentBlock() {
   let state = useContext(sharedState);
 
 
-  let [, , , , , , comments, setComments, , , , , , ,, , , , , setCommentId, currentUser, ,userRoll, ,, , , , ,  ] = state
+  let [loggedIn,setLoggedIn, , , , , comments, setComments, , , , , , ,, , , , , setCommentId, currentUser, ,userRoll, ,, , , , ,  ] = state
 
   const [deleted, setDeleted] = useState(false);
-
+  const [loading, setLoading] = useState(false)
 
   //return all comment from db
   useEffect(() => {
@@ -55,9 +57,6 @@ export default function CommentBlock() {
   //DELETE Comment
   async function deleteComment(e){
     setDeleted(false)
-
-    console.log(e)
-
     await fetch("/removeComment", {
       method: "DELETE",
       headers: {
@@ -91,7 +90,8 @@ export default function CommentBlock() {
   return (
     <div className="commentBlock">
       <img src={hiDog} alt='dag waving' className='hi-dog' />
-      <h3>Comments</h3>
+      <h3>Add Your Comments</h3>
+      {loggedIn ? <></> : <p>You must be logged in to add comments</p>}
       {userRoll === "member" ? (
         <NewCommentModal />
       ) : userRoll === "admin" ? (
@@ -168,11 +168,12 @@ export default function CommentBlock() {
                *** Admin can delete any comment
                */}
               {userRoll === "admin" ? (
-                <div className="comment-icons"  key={nanoid()}>
+                <div className="comment-icons"   key={nanoid()}>
                   <img
                     src={trash}
                     onClick={deleteComment}
                     alt="delete-icon"
+                 
                     data-del={comment._id}
                     data-name={comment.user}
                   />
