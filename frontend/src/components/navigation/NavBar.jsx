@@ -5,7 +5,6 @@ import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import HomeIcon from "@mui/icons-material/Home";
 import PanoramaIcon from "@mui/icons-material/Panorama";
-import InfoIcon from "@mui/icons-material/Info";
 import "./nav.css";
 
 export default function NavBar() {
@@ -19,10 +18,7 @@ export default function NavBar() {
   };
 
   const btnStyle = {
-    color: "#767cb8",
-    '&:active': {
-      color: "#efffafd6",
-    },
+    color: "#9da2dd",
   };
 
   return (
@@ -48,13 +44,6 @@ export default function NavBar() {
             onClick={() => navigate("./Gallery")}
             label="Gallery"
             icon={<PanoramaIcon />}
-          />
-
-          <BottomNavigationAction
-            sx={btnStyle}
-            onClick={() => navigate("./About")}
-            label="About"
-            icon={<InfoIcon />}
           />
         </BottomNavigation>
       </Box>

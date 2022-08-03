@@ -11,6 +11,10 @@
   align-items: center;
 }
 
+.event-main-container h1 {
+  font-family: mini-story;
+}
+
 
 .event-card {
   display: flex;

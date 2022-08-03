@@ -4,7 +4,6 @@ import { useState } from "react";
 import Dash from "./pages/Dash";
 import NavBar from "./components/navigation/NavBar";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import About from "./pages/About";
 import ErrorPage from "./pages/ErrorPage";
 import Gallery from "./pages/Gallery";
 
@@ -74,7 +73,6 @@ function App() {
           <NavBar />
           <Routes>
             <Route path="/" element={<Dash />} />
-            <Route path="/About" element={<About />} />
             <Route path="/Gallery" element={<Gallery />} />
             <Route path="*" element={<ErrorPage />} />
           </Routes>
