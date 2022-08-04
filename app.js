@@ -10,16 +10,19 @@ app.use(bodyParser.urlencoded({
 }))
 require('dotenv').config()
 app.use(bodyParser.json())
+const helmet = require("helmet");
 
-//require routes to endpoints
-//Users
+app.use(helmet());
+
+//Require routes to endpoints
+//Users Routes
 require('./routes/users/findAll')(app);
 require('./routes/users/newDog')(app);
 require('./routes/users/removeDog')(app);
 require('./routes/users/updateDog')(app);
 require('./routes/users/logInUser')(app);
 
-//events
+//events Routes
 require('./routes/events/allEvents')(app);
 require('./routes/events/newEvent')(app);
 require('./routes/events/updateEvent')(app);
@@ -28,15 +31,12 @@ require('./routes/events/decLikes')(app);
 require('./routes/events/deleteEvent')(app);
 require('./routes/events/OneEvent')(app);
 
-//comments
+//comments Routes
 require('./routes/comments/addComment')(app);
 require('./routes/comments/replies')(app);
 require('./routes/comments/removeComment')(app);
 require('./routes/comments/findAllComments')(app);
 require('./routes/comments/findOneComment')(app);
-
-
-
 
 
 //store API-key in
@@ -47,16 +47,16 @@ mongoose.connect(uri, {
    useNewUrlParser: true,
    useUnifiedTopology: true,
    //useMongoClient: true,
-   
+
 });
 //connection error handling
-mongoose.connection.on('error', function() {
+mongoose.connection.on('error', function () {
    console.log('Could not connect to the database. Exiting now...');
    process.exit();
-   });
-mongoose.connection.once('open', function() {
-      console.log("Successfully connected to the database");
-   })
+});
+mongoose.connection.once('open', function () {
+   console.log("Successfully connected to the database");
+})
 
 
 //Listening on port 8080

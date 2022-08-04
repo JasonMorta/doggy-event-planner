@@ -9,13 +9,17 @@ const Schema = {
     type: String,
     required: true
   },
-  comments: [{ type: String, date: Date }],
+  comments: [{
+    type: String,
+    date: Date
+  }],
   created: {
     type: Date,
     default: Date.now
   },
-  roll: {type: String}
+  roll: {
+    type: String
+  }
 }
 
 module.exports = MongooseModel = mongoose.model("dogOwners", Schema)
-

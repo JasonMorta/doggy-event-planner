@@ -2,14 +2,6 @@ const model = require('../model/dogOwnerSchema.js'); //require the schema
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
 
-//verify JWT token when make a delete/put/update request
-// function verifyJwt(decoded, token){
-//       const usr = req.headers['authorization'] //Get token from localStorage/frontend
-//       const token = usr.split(' ')[1]
-//       const decoded = jwt.verify(token, process.env.SECRET_KEY); //verify token secret-key
-//}
-
-
 
 //FIND all owners
 exports.findAll = async (req, res) => {
@@ -57,7 +49,9 @@ exports.new = async (req, res) => {
 
 
       //Create the JWT token      
-      payload = { 'name': req.body.name}
+      payload = {
+            'name': req.body.name
+      }
       const token = jwt.sign(JSON.stringify(payload), process.env.SECRET_KEY, {
             algorithm: 'HS256'
       })
@@ -91,7 +85,10 @@ exports.new = async (req, res) => {
                         name: req.body.name,
                         password: req.body.password
                   });
-                  res.send({'data': user, 'token': token})
+                  res.send({
+                        'data': user,
+                        'token': token
+                  })
 
                   //res.send(dogOwner); //send the same data back 
                   console.log("New user Added");

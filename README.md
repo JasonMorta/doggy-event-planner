@@ -15,13 +15,13 @@ I'll also make use of React-bootstrap for styling my app. Bootstrap has a wide r
 of reusable components that's already styled, is supported on the latest browser and
 is mobile responsive. Using bootstrap will cut down a lot of development time.
 
-## System requirements speciﬁcation
+## System requirements specification
 
 
 ### Who will use your application?
 - This app is specifically made for dog owners.
 
-### How will they beneﬁt from using it?
+### How will they benefit from using it?
 - Pet owners will be more aware of events to get together with other pet owners.
 - Owners pets will also benefit from this by getting a lot of social interaction.
 - These events can help a lot of owners who are looking for events like this.  

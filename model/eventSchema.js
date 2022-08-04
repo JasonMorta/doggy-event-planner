@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
-const eventSchema={
-  heading:  String, // String is shorthand for {type: String}
+const eventSchema = {
+  heading: String, // String is shorthand for {type: String}
   shortDes: String,
   time: String,
   date: String,
@@ -13,4 +13,3 @@ const eventSchema={
 };
 
 module.exports = MongooseModel = mongoose.model('events', eventSchema);
-
