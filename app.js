@@ -10,9 +10,9 @@ app.use(bodyParser.urlencoded({
 }))
 require('dotenv').config()
 app.use(bodyParser.json())
-const helmet = require("helmet");
+// const helmet = require("helmet");
 
-app.use(helmet());
+// app.use(helmet());
 
 //Require routes to endpoints
 //Users Routes
