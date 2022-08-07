@@ -6,11 +6,11 @@ export default function About() {
     <div className='about-container'>
      <h1>About</h1>
       <p>A safe space for your furbabies to plan meetups, Socialize, and Play.</p>
-      <lb/>
+      <div className='lb'></div>
       <p>Different groups for different needs (mini, active, giant, anxious,...)</p>
-       <lb/>
+      <div className='lb'></div>
       <p>Save time by knowing exactly when meet-ups are happening.</p>
-      <lb/>
+      <div className='lb'></div>
       <p>Connect with other dog parents.</p>
    
     </div>

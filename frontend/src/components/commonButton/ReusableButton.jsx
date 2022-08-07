@@ -26,6 +26,7 @@ export default function ReusableButton(props) {
       size={props.size}
       sx={style}
       data-listitem={props.listitem}
+      data-testid="reusable-btn"
       onClick={props.onClick}
     >
       {props.children}

@@ -13,9 +13,6 @@ import trash from '../../static/images/trash.png'
 import NewCommentModal from './addCommentModal/NewCommentModal';
 import RepliesModal from './addCommentModal/RepliesModal';
 import { useState } from 'react';
-import { nanoid } from 'nanoid'
-import Loader from '../spinner/Loader';
-import CircularLoader from '../spinner/CircularLoader';
 
 
 
@@ -25,10 +22,9 @@ export default function CommentBlock() {
   let state = useContext(sharedState);
 
 
-  let [loggedIn,setLoggedIn, , , , , comments, setComments, , , , , , ,, , , , , setCommentId, currentUser, ,userRoll, ,, , , , ,  ] = state
+  let [loggedIn,, , , , , comments, setComments, , , , , , ,, , , , , setCommentId, currentUser, ,userRoll, ,, , , , ,  ] = state
 
   const [deleted, setDeleted] = useState(false);
-  const [loading, setLoading] = useState(false)
 
   //return all comment from db
   useEffect(() => {
@@ -103,9 +99,9 @@ export default function CommentBlock() {
         sx={{ width: "100%", maxWidth: "90%", bgcolor: "background.paper" }}
         className="commentsList"
       >
-        {comments.map((comment) => (
+        {comments.map((comment, index) => (
           <>
-            <ListItem alignItems="flex-start" key={nanoid()} sx={{flexDirection: 'column'}}>
+            <ListItem alignItems="flex-start" key={index} sx={{flexDirection: 'column'}}>
               <ListItemText
                 className='comment-text'
                 primary=""
@@ -138,9 +134,9 @@ export default function CommentBlock() {
                 }
               />
               {/* Comment's replies array */}
-                {comment.replies.map(reply => (
+                {comment.replies.map((reply, key) => (
                   <ListItemText 
-                  key={nanoid()}
+                  key={key+index}
                   className='reply-text'
                   sx={{     
                     borderRadius: '5px',
@@ -149,6 +145,7 @@ export default function CommentBlock() {
                   secondary={
                     <React.Fragment >
                       <Typography
+                      key={key+index}
                         sx={{display: "inline" }}
                         component="span"
                         variant="body2"
@@ -168,7 +165,7 @@ export default function CommentBlock() {
                *** Admin can delete any comment
                */}
               {userRoll === "admin" ? (
-                <div className="comment-icons"   key={nanoid()}>
+                <div className="comment-icons"   key={index}>
                   <img
                     src={trash}
                     onClick={deleteComment}

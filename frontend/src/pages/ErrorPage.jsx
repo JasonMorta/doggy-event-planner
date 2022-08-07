@@ -3,6 +3,7 @@ import './404.css'
 
 export default function ErrorPage() {
 
+  //Load this error page when an unknown endpoint/url is entered into browser.
   return (
     <div className='error'>
       <h1>SORRY THE PAGE</h1>

@@ -8,37 +8,15 @@ import SignUpModal from "../components/signup/SignUpModal";
 import About from "../components/footer/About";
 import { sharedState } from "../App";
 
+//Dashboard will act as the home page.
 
-export default function Dash(props) {
+export default function Dash() {
+
+  //Parent state
   let state = useContext(sharedState);
+  let [, , , , , , , , , , , , , , , , , , , , , ,userRoll, ,] = state;
 
-  let [
-    ,
-    ,
-    ,
-    ,
-    ,
-    ,
-    ,
-    ,
-    ,
-    ,
-    ,
-    ,
-    ,
-    ,
-    ,
-    ,
-    ,
-    ,
-    ,
-    ,
-    ,
-    ,
-    userRoll,
-    ,
-  ] = state;
-
+  //Ff current user is Admin, display two extra buttons on the dash.
   return (
     <div className="dashboard-container">
       <SignUpModal />
@@ -52,8 +30,7 @@ export default function Dash(props) {
       )}
       <div className="dashboard">
         <Events />
-        <CommentBlock />
-       
+        <CommentBlock  />
       </div>
       <About />
     </div>

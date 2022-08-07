@@ -1,15 +1,10 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
+import { useEffect, useState, useContext } from 'react';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import './replies.css'
-import { ButtonBase, Dialog, DialogActions, DialogContent, DialogTitle, Slide, TextField } from '@mui/material';
+import { Dialog, DialogActions, DialogContent, DialogTitle, Slide, TextField } from '@mui/material';
 import TextLoader from '../../spinner/TextLoader';
-import { useContext } from 'react';
 import { sharedState } from '../../../App';
-import { useState } from 'react';
-import { useEffect } from 'react';
 
 
 //Handle the Modal functionality
@@ -24,7 +19,7 @@ export default function RepliesModal(props) {
   //Shared stated
   let state = useContext(sharedState);
 
-  let [loggedIn, setLoggedIn, dogOwners, setDogOwners, allEvents, setAllEvents, comments, setComments, editButton, setEditButton, eventId, setEventId, thisEvent, setThisEvent,update, setUpdate, thisComment, setThisComment, commentId, setCommentId, currentUser, setCurrentUser,userRoll, setUserRoll,limit, setLimit, thisReply, setThisReply, ,  ] = state
+  let [, , , , , , , setComments, , , , , , ,, , , , , , currentUser, ,, ,, , , , ,  ] = state
 
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);

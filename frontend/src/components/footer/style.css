@@ -28,14 +28,14 @@
  text-align: center;
 }
 
-lb {
+.lb {
  width: 65%;
  border: 1px solid #f2ede1;
  margin: 15px;
  position: relative;
 }
 
-lb::after{
+.lb::after{
  content: '';
  width: 20px;
  height: 20px;
@@ -46,7 +46,7 @@ lb::after{
  background-color: #f2ede1;
 }
 
-lb::before{
+.lb::before{
  content: '';
  width: 20px;
  height: 20px;

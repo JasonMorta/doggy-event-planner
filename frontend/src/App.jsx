@@ -8,7 +8,7 @@ import ErrorPage from "./pages/ErrorPage";
 import Gallery from "./pages/Gallery";
 
 //create context hook
-//This hook allow any nested children to share and alter data with the use of props.
+//This hook allow any nested children to read and rewrite the parent's state variables without passing it as props.
 export const sharedState = createContext();
 
 function App() {
@@ -19,10 +19,8 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [dogOwners, setDogOwners] = useState([]);
   const [allEvents, setAllEvents] = useState([]);
-
   const [editButton, setEditButton] = useState();
   const [eventId, setEventId] = useState("");
-  //Store selected event id in state
   const [thisEvent, setThisEvent] = useState({});
   const [update, setUpdate] = useState(false);
   const [thisComment, setThisComment] = useState("");
@@ -33,40 +31,43 @@ function App() {
   const [loading, setLoading] = useState(false);
 
   return (
-    //To pass and sharedState with all components, we use the .Provider element and pass data through value={[stateValues]}
+    //To pass and sharedState with all components,
+    //we use the .Provider element and pass data through value={[stateValues]} attribute.
     <sharedState.Provider
-      value={[
-        loggedIn,
-        setLoggedIn,
-        dogOwners,
-        setDogOwners,
-        allEvents,
-        setAllEvents,
-        comments,
-        setComments,
-        editButton,
-        setEditButton,
-        eventId,
-        setEventId,
-        thisEvent,
-        setThisEvent,
-        update,
-        setUpdate,
-        thisComment,
-        setThisComment,
-        commentId,
-        setCommentId,
-        currentUser,
-        setCurrentUser,
-        userRoll,
-        setUserRoll,
-        limit,
-        setLimit,
-        thisReply,
-        setThisReply,
-        loading,
-        setLoading,
-      ]}
+      value = {
+        [
+          loggedIn,// used to change text and booleans when logged in.
+          setLoggedIn,
+          dogOwners,// store dog owner API data.
+          setDogOwners,
+          allEvents,// store event cards API data.
+          setAllEvents,
+          comments,//store comments API data.
+          setComments,
+          editButton,// this button get's selected event data.
+          setEditButton,
+          eventId,// pass current event's id to children.
+          setEventId,
+          thisEvent,// pass selected event data.
+          setThisEvent,
+          update, // update selected event.
+          setUpdate,
+          thisComment, // store add comment text .
+          setThisComment,
+          commentId, // used to reply to a selected comment.
+          setCommentId,
+          currentUser, // used for sending user name to API.
+          setCurrentUser,
+          userRoll,// change text and button properties depending on the user roll.
+          setUserRoll,
+          limit,// limit the amount of events that can be created.
+          setLimit,
+          thisReply,// reply to comments.
+          setThisReply,
+          loading,// show/hide loading animations.
+          setLoading,
+        ]
+      }
     >
       <div className="App">
         <Router>
