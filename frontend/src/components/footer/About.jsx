@@ -3,7 +3,7 @@ import './style.css'
 
 export default function About() {
 
-  let h1 = 'About'
+  let h1 = 'WHY'
   const text = h1.split('')//splits each word into an array
 
 
