@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const assert = require('assert');
 
 const Schema = {
   name: {
@@ -18,8 +19,11 @@ const Schema = {
     default: Date.now
   },
   roll: {
-    type: String
+    type: String,
+    required: true
   }
 }
 
-module.exports = MongooseModel = mongoose.model("dogOwners", Schema)
+const MongooseModel = mongoose.model("dogOwners", Schema)
+
+module.exports = MongooseModel;

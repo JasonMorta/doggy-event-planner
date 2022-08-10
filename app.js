@@ -40,21 +40,32 @@ require('./routes/comments/findOneComment')(app);
 //store API-key in
 const uri = process.env.DB_API_KEY;
 
-//Connect to DB
-mongoose.connect(uri, {
-   useNewUrlParser: true,
-   useUnifiedTopology: true,
-   //useMongoClient: true,
 
-});
+//Connect to DB
+function connect(){
+      mongoose.connect(uri, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      //useMongoClient: true,
+   });
+}
+connect()
+
+
+
+
+
 //connection error handling
-mongoose.connection.on('error', function () {
-   console.log('Could not connect to the database. Exiting now...');
-   process.exit();
-});
-mongoose.connection.once('open', function () {
-   console.log("Successfully connected to the database");
-})
+//disconnect from db
+   mongoose.connection
+      .once('open', () => console.log('Connected!'))
+      .on('error', (error) => {
+         console.warn('Error : ', error);
+      });
+
+
+  
+
 
 
 //Listening on port 8080

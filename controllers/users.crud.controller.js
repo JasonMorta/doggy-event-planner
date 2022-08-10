@@ -47,18 +47,16 @@ exports.logIn = async (req, res, next) => {
 //send token with response
 exports.new = async (req, res) => {
 
+   //First check is userName exists
+      let name = req.body.name
+      let password = req.body.password
+  
 
       //Create the JWT token      
-      payload = {
-            'name': req.body.name
-      }
+      payload = {'name': name }
       const token = jwt.sign(JSON.stringify(payload), process.env.SECRET_KEY, {
             algorithm: 'HS256'
       })
-
-      //First check is userName exists
-      let name = req.body.name
-      let password = req.body.password
 
       try {
 
