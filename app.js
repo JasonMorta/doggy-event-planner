@@ -8,9 +8,9 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: false}))
 require('dotenv').config()
 app.use(bodyParser.json())
-// const helmet = require("helmet");
+const helmet = require("helmet");
 
-//app.use(helmet());
+app.use(helmet());
 
 //Require routes to endpoints
 //Users Routes
@@ -34,7 +34,6 @@ require('./routes/comments/removeComment')(app);
 require('./routes/comments/findAllComments')(app);
 require('./routes/comments/findOneComment')(app);
 
-
 //store API-key in
 const uri = process.env.DB_API_KEY;
 
@@ -49,10 +48,6 @@ function connect(){
 }
 connect()
 
-
-
-
-
 //connection error handling
 //disconnect from db
    mongoose.connection
@@ -61,17 +56,11 @@ connect()
          console.warn('Error : ', error);
       });
 
-
-  
-
-
-
 //Listening on port 8080
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
    console.log(`Server is listening on port ${PORT}`);
 });
-
 
 
 /* For Heroku Deployment */
