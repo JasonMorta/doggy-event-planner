@@ -120,7 +120,7 @@ is mobile responsive. Using bootstrap will cut down a lot of development time.
 - To upload the app's frontend and backend server together, "heroku-postbuild" was used inside the package.json file and the code in app.js line 77.
 - The frontend relies on the data that’s loaded from the backend server. That’s why both server need to run simultaneously.
 
-## Deployment
+## Links
 
 🔗 [Deployed App](https://dogeventplanner.herokuapp.com/)
 
