@@ -12,7 +12,7 @@ export default function About() {
     <div className='about-container'>
      <div className='headingText'>
        {text.map((letter, index)=>(
-        <h1 
+        <h1 key={index} 
         style={{color: `${index % 2 === 0 ? '#7f8aff':'#ff7ca3'}`, animationDuration: `3.${index}s`}}
         className='jello-vertical'
         >{letter}</h1>

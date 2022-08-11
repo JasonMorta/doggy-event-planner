@@ -17,7 +17,6 @@ app.use(bodyParser.json())
 require('./routes/users/findAll')(app);
 require('./routes/users/newDog')(app);
 require('./routes/users/removeDog')(app);
-require('./routes/users/updateDog')(app);
 require('./routes/users/logInUser')(app);
 
 //events Routes
@@ -27,7 +26,6 @@ require('./routes/events/updateEvent')(app);
 require('./routes/events/incLikes')(app);
 require('./routes/events/decLikes')(app);
 require('./routes/events/deleteEvent')(app);
-require('./routes/events/OneEvent')(app);
 
 //comments Routes
 require('./routes/comments/addComment')(app);

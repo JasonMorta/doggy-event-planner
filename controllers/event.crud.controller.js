@@ -4,7 +4,6 @@ require('dotenv').config()
 
 //FIND all Events
 exports.all = async (req, res) => {
-
       try {
             const events = await model.find({}).sort({
                   "created": -1

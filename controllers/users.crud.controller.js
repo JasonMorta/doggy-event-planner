@@ -116,32 +116,3 @@ exports.delete = async (req, res) => {
             res.send(err)
       }
 }
-
-
-
-//UPDATE Owner
-exports.update = async (req, res) => {
-
-      let dog = req.body.name
-      try {
-            //Find owner by id
-            await model.findOneAndUpdate({
-                  name: dog
-            }, {
-                  $set: {
-                        comments: "req query commentsww"
-                  }
-            }, {
-                  new: true
-            })
-
-            //return owner documents
-            const dogOwner = await model.find(req.body.dog);
-            res.send(dogOwner)
-
-
-      } catch (err) {
-            console.log(err)
-            res.send(err)
-      }
-}
