@@ -4,7 +4,7 @@ import { useState } from "react";
 import Dash from "./pages/Dash";
 import NavBar from "./components/navigation/NavBar";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import ErrorPage from "./pages/ErrorPage";
+import ErrorPage from "./pages/404";
 import Gallery from "./pages/Gallery";
 
 //create context hook
