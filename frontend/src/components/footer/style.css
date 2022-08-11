@@ -18,6 +18,8 @@
 
 .about-container p {
     width: 100%;
+    font-size: larger;
+    font-family:Tahoma, sans-serif;
 }
 
 .headingText {

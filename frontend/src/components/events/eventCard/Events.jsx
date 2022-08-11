@@ -98,7 +98,7 @@ export default function Events() {
                 className="main-content"
                 style={
                   index % 2 === 0
-                    ? { marginLeft: "32%", alignItems: "flex-end" }
+                    ? { marginLeft: "45%", alignItems: "flex-start" }
                     : { marginRight: "32%", alignItems: "flex-start" }
                 }
               >
@@ -117,7 +117,7 @@ export default function Events() {
                       target="_blank"
                       rel="noreferrer"
                     >
-                      <AddLocationAltIcon />
+                      <AddLocationAltIcon color="primary" />
                     </a>
                   </div>
                   <p>Dog size: {event.dogSize[0]}</p>
