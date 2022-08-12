@@ -102,6 +102,7 @@ is mobile responsive. Using bootstrap will cut down a lot of development time.
 
 ### Security
 - To make the app more secure a middleware called [Helmet](https://www.npmjs.com/package/helmet) is used.
+- This app also make use of JWT(JavaScript-Web-Token). Evetime a user logs in, a new JWT token is created. This token is used to verify the user when making any updates like adding a comment or if the admin does any updates to the event cards. The token is stored in the browsers sessionStorage.
 
 #### Third-party API's 
 - This app contains no third-party API besides links to google maps.
