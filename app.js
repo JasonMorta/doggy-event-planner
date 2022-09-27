@@ -8,9 +8,9 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: false}))
 require('dotenv').config()
 app.use(bodyParser.json())
-const helmet = require("helmet");
+//const helmet = require("helmet");
 
-app.use(helmet());
+//app.use(helmet());
 
 //Require routes to endpoints
 //Users Routes

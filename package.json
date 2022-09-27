@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha --recursive ",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend",
-    "start": "concurrently \"npm install && nodemon app.js\" \"npm install --prefix frontend && npm start --prefix frontend\""
+    "start": "nodemon app.js"
   },
   "repository": {
     "type": "git",
