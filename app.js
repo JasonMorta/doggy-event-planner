@@ -35,7 +35,7 @@ require('./routes/comments/findAllComments')(app);
 require('./routes/comments/findOneComment')(app);
 
 //store API-key in
-const uri = process.env.DB_API_KEY;
+const uri = "mongodb+srv://mortadev:iJ85snYv3RhfDc8q@cluster01.j0haa.mongodb.net/dogeventplanner?retryWrites=true&w=majority";
 
 
 //Connect to DB

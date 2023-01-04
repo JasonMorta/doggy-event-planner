@@ -22,7 +22,7 @@ exports.logIn = async (req, res, next) => {
       payload = {
             'name': req.body.name
       }
-      const token = jwt.sign(JSON.stringify(payload), process.env.SECRET_KEY, {
+      const token = jwt.sign(JSON.stringify(payload), "mansbestfriend", {
             algorithm: 'HS256'
       })
 
@@ -54,7 +54,7 @@ exports.new = async (req, res) => {
 
       //Create the JWT token      
       payload = {'name': name }
-      const token = jwt.sign(JSON.stringify(payload), process.env.SECRET_KEY, {
+      const token = jwt.sign(JSON.stringify(payload), "mansbestfriend", {
             algorithm: 'HS256'
       })
 
