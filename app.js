@@ -7,6 +7,7 @@ const mongoose = require("mongoose");
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: false}))
 require('dotenv').config()
+// allow your React app to access your backend server
 app.use(bodyParser.json())
 //const helmet = require("helmet");
 
