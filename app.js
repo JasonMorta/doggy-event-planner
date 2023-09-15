@@ -1,7 +1,9 @@
 const express = require("express");
 require('isomorphic-fetch');
 const app = express();
-const path = require('path')
+require('dotenv').config()
+// const path = require('path')
+const cors = require("cors");
 app.use(express.json());
 const mongoose = require("mongoose");
 const bodyParser = require('body-parser');
@@ -12,6 +14,13 @@ app.use(bodyParser.json())
 // /const helmet = require("helmet");
 
 //app.use(helmet());
+
+// Allow requests from a specific origin (e.g., localhost during development)
+const corsOptions = {
+   origin: "*", // Change this to your frontend's URL
+ };
+ 
+ app.use(cors(corsOptions));
 
 //Require routes to endpoints
 //Users Routes
@@ -36,13 +45,10 @@ require('./routes/comments/removeComment')(app);
 require('./routes/comments/findAllComments')(app);
 require('./routes/comments/findOneComment')(app);
 
-//store API-key in
-const uri = "mongodb+srv://mortadev:BiKGwA54APGFkccj@cluster01.j0haa.mongodb.net/";
-
 
 //Connect to DB
 function connect(){
-      mongoose.connect(uri, {
+      mongoose.connect(process.env.DB_API_KEY, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       //useMongoClient: true,

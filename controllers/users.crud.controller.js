@@ -3,7 +3,9 @@ const jwt = require('jsonwebtoken')
 require('dotenv').config()
 
 
+//! Get all users
 //FIND all owners
+//get = /allUsers
 exports.all = async (req, res) => {
       console.log('res', res)
 
@@ -16,14 +18,16 @@ exports.all = async (req, res) => {
       }
 }
 
-//FIND One/LOG-IN owner
+//! Log-in owner
+//FIND One/ 
 //Generate a new token on log-in
+// post = /logIn
 exports.logIn = async (req, res, next) => {
       //Create the JWT token      
       payload = {
             'name': req.body.name
       }
-      const token = jwt.sign(JSON.stringify(payload), "mansbestfriend", {
+      const token = jwt.sign(JSON.stringify(payload), process.env.SECRET_KEY, {
             algorithm: 'HS256'
       })
 
@@ -44,8 +48,10 @@ exports.logIn = async (req, res, next) => {
       }
 }
 
+//! Register
 //ADD(SIGN-UP) a dogOwner document to db
 //send token with response
+//post = /newDog
 exports.new = async (req, res) => {
 
    //First check is userName exists
@@ -55,7 +61,7 @@ exports.new = async (req, res) => {
 
       //Create the JWT token      
       payload = {'name': name }
-      const token = jwt.sign(JSON.stringify(payload), "mansbestfriend", {
+      const token = jwt.sign(JSON.stringify(payload), process.env.SECRET_KEY, {
             algorithm: 'HS256'
       })
 
@@ -99,12 +105,16 @@ exports.new = async (req, res) => {
       }
 }
 
+//! Delete user
+//Only admin can do this
 //DELETE a dogOwner from db
+// put = /removeDog
 exports.delete = async (req, res) => {
-
+      console.log('req.body.id', req.body.id)
       try {
             await model.findOneAndDelete({
                   _id: req.body.id
+            
             })
 
             //find & return all owners documents

@@ -39,7 +39,7 @@ exports.addComment = async (req, res, next) => {
       const token = auth.split(' ')[1]
       //handle runtime errors
       try {
-            const verify = jwt.verify(token, "mansbestfriend"); //verify token secret-key
+            const verify = jwt.verify(token, process.env.SECRET_KEY); //verify token secret-key
             const newComment = new model({
                   user: req.body.user,
                   comment: req.body.comment,
@@ -73,8 +73,8 @@ exports.replies = async (req, res) => {
       try {
             //Find event by id
             await model.findOneAndUpdate({
-                        _id: req.body.id
-                  },
+                  _id: req.body.id
+            },
 
                   {
                         $push: {
@@ -84,9 +84,9 @@ exports.replies = async (req, res) => {
                               }
                         }
                   }, {
-                        new: true,
-                        upsert: true
-                  });
+                  new: true,
+                  upsert: true
+            });
 
 
             //return all comment documents

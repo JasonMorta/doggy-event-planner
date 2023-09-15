@@ -2,7 +2,8 @@ const model = require('../model/eventSchema'); //require the schema
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
 
-//FIND all Events
+//! FIND all Events
+// get = /allEvents
 exports.all = async (req, res) => {
       try {
             const events = await model.find({}).sort({
@@ -15,7 +16,8 @@ exports.all = async (req, res) => {
       }
 }
 
-//ADD a event document to db
+//! ADD a event document to db
+//post = /newEvent
 exports.new = async (req, res) => {
 
       //"try,catch" will handle runtime errors
@@ -54,7 +56,8 @@ exports.new = async (req, res) => {
 
 
 
-//DELETE one event from the db
+//! DELETE one event from the db
+// delete = /delete
 exports.deleteEvent = async (req, res) => {
 
       try {
@@ -73,12 +76,13 @@ exports.deleteEvent = async (req, res) => {
       }
 }
 
-//UPDATE one event in db
+//! UPDATE one event in db
+// put = /updateEvent
 exports.updateEvent = async (req, res) => {
 
       try {
             //Find event by id
-            await model.findOneAndUpdate({
+          const update =  await model.findOneAndUpdate({
                   _id: req.body.id
             }, {
                   $set: {
@@ -88,18 +92,13 @@ exports.updateEvent = async (req, res) => {
                         date: req.body.date,
                         location: req.body.location,
                         mapLink: req.body.mapLink,
-                        dogSize: req.body.dogSize,
-
+                        dogSize: req.body.dogSize
                   }
-
-            }, {
-                  new: true
-            })
+            }, {new: true})
 
             //return all event documents
-            const events = await model.find({});
             console.log("Event Updated")
-            res.send(events)
+            res.send(update)
 
 
       } catch (err) {
