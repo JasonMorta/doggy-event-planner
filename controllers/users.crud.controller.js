@@ -4,7 +4,8 @@ require('dotenv').config()
 
 
 //FIND all owners
-exports.findAll = async (req, res) => {
+exports.all = async (req, res) => {
+      console.log('res', res)
 
       try {
             const owners = await model.find({});

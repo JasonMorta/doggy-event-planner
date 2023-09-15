@@ -9,14 +9,15 @@ app.use(bodyParser.urlencoded({extended: false}))
 require('dotenv').config()
 // allow your React app to access your backend server
 app.use(bodyParser.json())
-//const helmet = require("helmet");
+// /const helmet = require("helmet");
 
 //app.use(helmet());
 
 //Require routes to endpoints
 //Users Routes
-require('./routes/users/findAll')(app);
+// require('./controllers/event.crud.controller')(app);
 require('./routes/users/newDog')(app);
+require('./routes/users/allUsers')(app);
 require('./routes/users/removeDog')(app);
 require('./routes/users/logInUser')(app);
 
@@ -36,7 +37,7 @@ require('./routes/comments/findAllComments')(app);
 require('./routes/comments/findOneComment')(app);
 
 //store API-key in
-const uri = "mongodb+srv://mortadev:iJ85snYv3RhfDc8q@cluster01.j0haa.mongodb.net/dogeventplanner?retryWrites=true&w=majority";
+const uri = "mongodb+srv://mortadev:BiKGwA54APGFkccj@cluster01.j0haa.mongodb.net/";
 
 
 //Connect to DB
