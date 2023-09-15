@@ -46,7 +46,7 @@ export default function Events() {
   //Get all task from API on page load
   useEffect(() => {
     async function getEvents() {
-      await fetch("/allEvents", {
+      await fetch("https://dog-event-api.onrender.com/allEvents", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

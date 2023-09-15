@@ -20,7 +20,7 @@ export default function Update(props) {
     ,
     ,
     thisEvent,
-    ,
+    setThisEvent,
     ,
     setUpdate,
   ] = state;
@@ -28,7 +28,7 @@ export default function Update(props) {
   //Handle updating a single event
   async function Update(e) {
     setUpdate(false);
-    await fetch("/updateEvent", {
+    await fetch("https://dog-event-api.onrender.com/updateEvent", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -47,16 +47,17 @@ export default function Update(props) {
     })
       .then((res) => res.json())
       .then((response) => {
+        console.log('response', response)
+      
         setAllEvents(response);
         setUpdate(true);
-        console.log(response);
+
       })
       .catch((error) => {
-        console.log(error);
-        alert(error);
+        console.table(error);
       });
 
-    return props.close();
+     props.close();
   } // end
 
   return (

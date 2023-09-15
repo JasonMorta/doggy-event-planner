@@ -20,7 +20,7 @@ export default function FavIcon(props) {
   async function likeButton(e) {
     if (!like) {
       //Increment likes
-      await fetch("incLike", {
+      await fetch("https://dog-event-api.onrender.com/incLike", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -38,7 +38,7 @@ export default function FavIcon(props) {
       setLike(true);
     } else {
       //Decrement likes
-      await fetch("decLikes", {
+      await fetch("https://dog-event-api.onrender.com/decLikes", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

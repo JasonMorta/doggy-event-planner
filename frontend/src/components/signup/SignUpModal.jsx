@@ -113,7 +113,7 @@ export default function SignUpModal() {
       setTimeout(() => {
         setClearField(false);
       }, 500);
-      await fetch("/newDog", {
+      await fetch("https://dog-event-api.onrender.com/newDog", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -153,7 +153,7 @@ export default function SignUpModal() {
     setTimeout(() => {
       setClearField(false);
     }, 500);
-    await fetch("/logIn", {
+    await fetch("https://dog-event-api.onrender.com/logIn", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

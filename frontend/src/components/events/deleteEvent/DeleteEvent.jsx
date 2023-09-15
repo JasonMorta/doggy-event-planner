@@ -36,7 +36,7 @@ export default function DeleteEvent(props) {
   ] = state;
 
   async function deleteThisEvent(e) {
-    await fetch("/delete", {
+    await fetch("https://dog-event-api.onrender.com/delete", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

@@ -84,7 +84,7 @@ export default function NewCommentModal() {
   async function addComment(e) {
     setLoading(true);
     //Add new user to db
-    await fetch("/addComment", {
+    await fetch("https://dog-event-api.onrender.com/addComment", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

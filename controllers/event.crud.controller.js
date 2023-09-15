@@ -4,17 +4,20 @@ require('dotenv').config()
 
 //! FIND all Events
 // get = /allEvents
+
+
 exports.all = async (req, res) => {
       try {
             const events = await model.find({}).sort({
                   "created": -1
             });
-            res.send(events)
+            return res.send(events)
       } catch {
             console.log(err)
-            res.send(err)
+            return res.send(err)
       }
 }
+
 
 //! ADD a event document to db
 //post = /newEvent
@@ -82,7 +85,7 @@ exports.updateEvent = async (req, res) => {
 
       try {
             //Find event by id
-          const update =  await model.findOneAndUpdate({
+            const update = await model.findOneAndUpdate({
                   _id: req.body.id
             }, {
                   $set: {
@@ -94,11 +97,12 @@ exports.updateEvent = async (req, res) => {
                         mapLink: req.body.mapLink,
                         dogSize: req.body.dogSize
                   }
-            }, {new: true})
+            }, { new: true })
 
             //return all event documents
             console.log("Event Updated")
-            res.send(update)
+            let all = await model.find({})
+            res.send(all)
 
 
       } catch (err) {
@@ -114,12 +118,12 @@ exports.updateLikes = async (req, res) => {
       try {
             //Find event by id
             await model.findOneAndUpdate({
-                        _id: req.body.id
-                  }, {
-                        $inc: {
-                              likes: 1
-                        }
-                  },
+                  _id: req.body.id
+            }, {
+                  $inc: {
+                        likes: 1
+                  }
+            },
 
                   {
                         new: true
@@ -142,12 +146,12 @@ exports.decrementLikes = async (req, res) => {
       try {
             //Find event by id
             await model.findOneAndUpdate({
-                        _id: req.body.id
-                  }, {
-                        $inc: {
-                              likes: -1
-                        }
-                  },
+                  _id: req.body.id
+            }, {
+                  $inc: {
+                        likes: -1
+                  }
+            },
 
                   {
                         new: true
@@ -165,8 +169,10 @@ exports.decrementLikes = async (req, res) => {
 }
 
 
-//Return event by id events
-exports.fetchOne = async (req, res) => {
+//! Find one event
+// Return event by id events
+// get = /oneEvent
+exports.oneEvent = async (req, res) => {
       try {
             //return all event documents
             const event = await model.findById({

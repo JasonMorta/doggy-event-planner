@@ -32,24 +32,8 @@ export default function AddEventModal(props) {
   //shared state
   let state = useContext(sharedState);
   //deconstruct state
-  let [
-    ,
-    ,
-    ,
-    ,
-    allEvents,
-    ,
-    ,
-    ,
-    ,
-    ,
-    ,
-    ,
-    thisEvent,
-    setThisEvent,
-    ,
-    setUpdate,
-  ] = state;
+  let [, , , , allEvents, , , , , , , , thisEvent, setThisEvent, , setUpdate] =
+    state;
 
   //When the edit button is clicked, the current event's id is stored
   //in eventId state. This will allow the delete and update buttons
@@ -62,9 +46,12 @@ export default function AddEventModal(props) {
   //Edit button functionality
   //Fill the fields with this current event values.
   async function handleClickOpen(e) {
+    console.log('open Editor')
     setLoading(true);
-    console.log(allEvents);
-    await fetch("OneEvent", {
+    setOpen(true);
+  
+
+    await fetch("https://dog-event-api.onrender.com/findOneEvent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -73,12 +60,15 @@ export default function AddEventModal(props) {
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log('data', data)
         setThisEvent(data);
-        setOpen(true);
         setTimeout(() => {
           setLoading(false);
           console.log(e.target.dataset.listitem);
         }, 500);
+      })
+      .catch((error) => {
+        console.table(error);
       });
   }
 
@@ -129,7 +119,7 @@ export default function AddEventModal(props) {
         variant="contained"
         color="success"
         listitem={props.event}
-       style={{width: "50px"}}
+        style={{ width: "50px" }}
         onClick={handleClickOpen}
       >
         Edit

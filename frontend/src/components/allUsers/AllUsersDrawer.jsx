@@ -17,7 +17,7 @@ export default function AllUsersDrawer() {
 
   let appState = useContext(sharedState)
 
-  let [, , dogOwners, setDogOwners, , , , , , , , , , ,, , , , , , ,  ] = appState
+  let [, , dogOwners, setDogOwners] = appState
 
   //Drawer state
   const [state, setState] = useState({
@@ -38,9 +38,9 @@ export default function AllUsersDrawer() {
 
   //Return app users from db
   useEffect(() => {
-    //console.log(thisEvent)
+    console.log("thisEvent")
     async function getEvents() {
-      await fetch("/findAll", {
+      await fetch("https://dog-event-api.onrender.com/allUsers", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -63,7 +63,7 @@ export default function AllUsersDrawer() {
   //delete user
   async function deleteUser(e){
     setDeleted(true)
-    await fetch("/removeDog", {
+    await fetch("https://dog-event-api.onrender.com/removeDog", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json"

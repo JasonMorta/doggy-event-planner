@@ -30,7 +30,7 @@ export default function CommentBlock() {
   useEffect(() => {
     setCommentId('')
     async function getComments(){
-        await fetch("/findAllComments", {
+        await fetch("https://dog-event-api.onrender.com/findAllComments", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -53,7 +53,7 @@ export default function CommentBlock() {
   //DELETE Comment
   async function deleteComment(e){
     setDeleted(false)
-    await fetch("/removeComment", {
+    await fetch("https://dog-event-api.onrender.com/removeComment", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

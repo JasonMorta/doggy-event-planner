@@ -110,7 +110,7 @@ export default function AddEventModal() {
   async function addEvent(e) {
     setOpen(false);
     //Add new user to db
-    await fetch("/newEvent", {
+    await fetch("https://dog-event-api.onrender.com/newEvent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

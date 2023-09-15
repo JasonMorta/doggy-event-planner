@@ -7,14 +7,13 @@ require('dotenv').config()
 //FIND all owners
 //get = /allUsers
 exports.all = async (req, res) => {
-      console.log('res', res)
 
       try {
             const owners = await model.find({});
             res.send(owners)
       } catch {
-            console.log(err)
-            res.send(err)
+            console.log("no users found")
+            res.send("user not found")
       }
 }
 

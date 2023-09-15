@@ -70,7 +70,7 @@ export default function RepliesModal(props) {
   */
   async function handleReplySubmit(e) {
     setLoading(true);
-    await fetch("/replies", {
+    await fetch("https://dog-event-api.onrender.com/replies", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
