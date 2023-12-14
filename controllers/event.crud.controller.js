@@ -1,5 +1,5 @@
 const model = require('../model/eventSchema'); //require the schema
-const jwt = require('jsonwebtoken')
+//const jwt = require('jsonwebtoken')
 require('dotenv').config()
 
 //! FIND all Events
@@ -9,12 +9,12 @@ require('dotenv').config()
 exports.all = async (req, res) => {
       try {
             const events = await model.find({}).sort({
-                  "created": -1
+                  "created": -1 //sort by date
             });
             return res.send(events)
       } catch {
             console.log(err)
-            return res.send(err)
+            return res.send(err, "data not available")
       }
 }
 
